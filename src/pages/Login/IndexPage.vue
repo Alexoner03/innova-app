@@ -5,7 +5,9 @@
     <div style="z-index: 3" class="page-size page-content absolute">
       <div class="flex column justify-center items-center" style="height: 100%">
         <h1>INNOVA</h1>
-        <LoginForm></LoginForm>
+        <div class="q-px-xl" style="width: 100%">
+          <LoginForm></LoginForm>
+        </div>
       </div>
     </div>
   </div>
