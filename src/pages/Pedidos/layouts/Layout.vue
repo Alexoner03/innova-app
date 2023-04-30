@@ -19,6 +19,12 @@
       </q-toolbar>
     </q-header>
 
+    <Drawer></Drawer>
+
+    <q-page-container>
+      <router-view></router-view>
+    </q-page-container>
+
     <q-footer>
       <div class="bg-yellow flex justify-between items-center q-px-md" style="height: 50px">
         <div class="text-red text-bold" style="font-size: 20px">
@@ -29,12 +35,6 @@
         </div>
       </div>
     </q-footer>
-
-    <Drawer></Drawer>
-
-    <q-page-container>
-      <router-view></router-view>
-    </q-page-container>
   </q-layout>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="relative-position">
+  <div class="relative-position" style="width: 100vw; height: 100vh overflow: hidden">
     <div style="z-index: 1" class="page-size bg absolute"></div>
     <div style="z-index: 2" class="page-size blur absolute"></div>
     <div style="z-index: 3" class="page-size page-content absolute">
@@ -36,7 +36,7 @@ import LoginForm from "pages/Login/components/LoginForm.vue";
 h1 {
   font-family: "Poppins", sans-serif;
   color: #fff;
-  font-size: 8em;
+  font-size: 4em;
   font-weight: 700;
   text-shadow: #FFF 0px 0px 5px,
   #FFF 0px 0px 10px,

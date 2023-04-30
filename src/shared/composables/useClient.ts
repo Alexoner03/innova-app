@@ -20,7 +20,12 @@ export const useClient = () => {
       const hasConexion = window.navigator.onLine;
 
       if (hasConexion) {
-        clients.value = await ClientService.filterClients(type, value)
+        const result = await ClientService.filterClients(type, value)
+
+        if(result !== null) {
+          clients.value = result
+        }
+
         return
       }
 

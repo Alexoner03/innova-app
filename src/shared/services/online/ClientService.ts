@@ -1,69 +1,32 @@
 import {IClient} from "src/shared/composables/useClient";
+import axios from "axios";
 
-
-const clients = [
-  {
-    name: "Compañía Minera Antamina S.A.",
-    ruc: "20437357201",
-    address: "Carretera Central Km 299, San Marcos, Áncash"
-  },
-  {
-    name: "Telefónica del Perú S.A.A.",
-    ruc: "20100105081",
-    address: "Av. Arequipa 1155, Santa Beatriz, Lima"
-  },
-  {
-    name: "Gloria S.A.",
-    ruc: "20100066603",
-    address: "Av. Argentina 4793, Callao"
-  },
-  {
-    name: "Backus y Johnston S.A.A.",
-    ruc: "20100052241",
-    address: "Av. Nicolas Arriola 480, San Luis, Lima"
-  },
-  {
-    name: "Refinería La Pampilla S.A.A.",
-    ruc: "20100120966",
-    address: "Av. Elmer Faucett s/n, Callao"
-  },
-  {
-    name: "Banco de Crédito del Perú",
-    ruc: "20100047218",
-    address: "Av. Juan de Arona 893, San Isidro, Lima"
-  },
-  {
-    name: "InRetail Perú Corp S.A.",
-    ruc: "20506336271",
-    address: "Av. Paseo de la República 3220, San Isidro, Lima"
-  },
-  {
-    name: "Southern Copper Corporation",
-    ruc: "20100067281",
-    address: "Av. Los Faisanes 182, San Isidro, Lima"
-  },
-  {
-    name: "Luz del Sur S.A.A.",
-    ruc: "20100054147",
-    address: "Av. Paseo de la República 3066, San Isidro, Lima"
-  },
-  {
-    name: "Cementos Pacasmayo S.A.A.",
-    ruc: "20100118877",
-    address: "Carretera Panamericana Norte Km 662, Pacasmayo, La Libertad"
-  }
-];
+interface RawClient {
+  id_cliente: number
+  cliente: string
+  direccion: string
+  ruc: string
+}
 
 const ClientService = {
   async filterClients(type: "name" | "ruc", value: string) {
-    return new Promise<IClient[]>((resolve, reject) => {
-      setTimeout(() => {
-        if (type === "name") {
-          resolve(clients.filter(item => item.name.toLowerCase().includes(value.toLowerCase())))
-          return
-        }
-        resolve(clients.filter(item => item.ruc.toLowerCase().includes(value.toLowerCase())))
-      },1500)
+
+    const response = await axios.get<RawClient[]>(`http://innova-backend.test/api/cliente/filter?type=${type}&value=${value.toLowerCase()}`,{
+      headers: {
+        "Authorization" : localStorage.getItem("token")
+      }
+    })
+
+    if(response.status !== 200) {
+      return null
+    }
+
+    return response.data.map<IClient>(item => {
+      return {
+        name: item.cliente,
+        address: item.direccion,
+        ruc: item.ruc
+      }
     })
   }
 }

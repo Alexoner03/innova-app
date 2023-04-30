@@ -18,7 +18,7 @@
     <q-separator/>
 
     <q-tab-panels v-model="tab" animated>
-      <q-tab-panel name="Cliente" style="height: 100%">
+      <q-tab-panel name="Cliente">
         <cliente-tab/>
       </q-tab-panel>
 

@@ -19,7 +19,12 @@ export const useProduct= () => {
       const hasConexion = window.navigator.onLine;
 
       if (hasConexion) {
-        products.value = await ProductService.searchProduct(value)
+        const result = await ProductService.searchProduct(value)
+
+        if(result !== null) {
+          products.value = result;
+        }
+
         return
       }
     }

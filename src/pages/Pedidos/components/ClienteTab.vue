@@ -1,5 +1,6 @@
 <template>
   <q-select
+    behavior="menu"
     outlined
     v-model="model"
     use-input
@@ -24,6 +25,7 @@
   </q-select>
 
   <q-select
+    behavior="menu"
     outlined
     v-model="model"
     use-input

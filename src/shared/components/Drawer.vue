@@ -20,7 +20,7 @@
           <q-separator />
         </template>
 
-        <q-item clickable v-ripple @click="closeSession">
+        <q-item clickable v-ripple @click="logout">
           <q-item-section avatar>
             <q-icon name="close" />
           </q-item-section>
@@ -35,24 +35,22 @@
 
     <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
       <div class="absolute-bottom bg-transparent">
-        <q-avatar size="56px" class="q-mb-sm">
-          <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-        </q-avatar>
-        <div class="text-weight-bold">Razvan Stoenescu</div>
-        <div>@rstoenescu</div>
+        <div class="text-weight-bold">{{user?.nombre}}</div>
+        <div>{{user?.cargo}}</div>
       </div>
     </q-img>
 
   </q-drawer>
 </template>
 
-<script setup>
-
-import {useDrawer} from "src/shared/composables/useDrawer";
+<script setup lang="ts">
 import {useRouter} from "vue-router";
+import {useDrawer} from "src/shared/composables/useDrawer";
+import {useAuth} from "src/shared/composables/useAuth";
 
-const {open} = useDrawer()
-const router = useRouter()
+const {open} = useDrawer();
+const router = useRouter();
+const {closeSession, user} = useAuth()
 
 const Menu = [
   {
@@ -64,7 +62,8 @@ const Menu = [
 ];
 
 
-const closeSession = () => {
+const logout = () => {
+  closeSession()
   router.push({name: "login"})
 }
 
