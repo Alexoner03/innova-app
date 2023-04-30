@@ -21,9 +21,15 @@
         </q-item-section>
       </q-item>
 
-      <q-item clickable v-close-popup  @click="_showSaveOrders">
+      <q-item clickable v-close-popup @click="_showSaveOrders">
         <q-item-section>
           <q-item-label>Pedidos Pendientes</q-item-label>
+        </q-item-section>
+      </q-item>
+
+      <q-item clickable v-close-popup @click="_sync">
+        <q-item-section>
+          <q-item-label>Sincronizar</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -37,21 +43,30 @@
 
   <q-dialog v-model="confirmDelete" persistent>
     <q-card>
-      <q-card-section class="row items-center">
+
+      <q-card-section
+        class="row items-center">
         <span class="q-ml-sm">¿Estás seguro de que deseas cancelar la orden?</span>
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="No" color="gray" v-close-popup class="q-mr-lg" />
-        <q-btn flat label="Si" color="negative" @click="_cancelOrder" />
+        <q-btn flat label="No" color="gray" v-close-popup class="q-mr-lg"/>
+        <q-btn flat label="Si" color="negative" @click="_cancelOrder"/>
       </q-card-actions>
     </q-card>
   </q-dialog>
 
   <q-dialog v-model="showSaveOrders">
-    <q-card>
+    <q-card style="position: relative; width: 100%;">
 
-      <q-card-section>
+      <q-card-section
+        style="position: fixed;
+        z-index: 50;
+        width: 84%;
+        height: 60px;
+        background-color: white;
+        border-bottom: 1px solid black"
+      >
         <div class="flex justify-between">
           <div class="text-h6">Pedidos Guardados:</div>
           <div>
@@ -62,14 +77,16 @@
 
       <q-separator></q-separator>
 
-      <q-card-section class="scroll" style="max-height: 80vh; width: 80vw">
-        <div @click="_reloadOrder(order)" class="flex column q-mb-md rounded-borders" v-for="(order, index) in saveOrders" :key="index" style="width: 100%; position: relative; border: 1px solid black;" v-ripple>
+      <q-card-section class="scroll" style="max-height: 80vh; padding-top: 80px">
+        <div @click="_reloadOrder(order)" class="flex column q-mb-md rounded-borders"
+             v-for="(order, index) in saveOrders" :key="index"
+             style="width: 100%; position: relative; border: 1px solid black;" v-ripple>
           <div class="text-center text-bold">
-            {{order.client.name}}
+            {{ order.client.name }}
           </div>
           <div class="text-center">
-            Cantidad de productos:  {{ order.products.length }} <br>
-            Fecha: {{order.createdAt}}
+            Cantidad de productos: {{ order.products.length }} <br>
+            Fecha: {{ order.createdAt }}
           </div>
         </div>
       </q-card-section>
@@ -84,8 +101,12 @@ import {STATES, useOrder} from "src/shared/composables/useOrder";
 import {useQuasar} from "quasar";
 import {ref} from "vue";
 import {Order} from "src/shared/db";
+import {useClient} from "src/shared/composables/useClient";
+import {useProduct} from "src/shared/composables/useProduct";
 
-const {saveOrder, reset, listAll} = useOrder()
+const {saveOrder, reset, listAll, loadOrder} = useOrder()
+const {syncClients} = useClient()
+const {syncProducts} = useProduct()
 const $q = useQuasar();
 const confirmDelete = ref(false)
 const showSaveOrders = ref(false)
@@ -117,20 +138,28 @@ const _saveOrder = async () => {
 
 }
 
-const _cancelOrder = () => {
-  reset()
+const _cancelOrder = async () => {
   confirmDelete.value = false;
+
+  $q.loading.show({
+    message: "Eliminado pedido"
+  })
+
+  await reset()
+
   $q.notify({
     message: "Formularios limpios",
     color: "green"
   })
+
+  $q.loading.hide();
 }
 
 const _showSaveOrders = async () => {
   $q.loading.show();
   saveOrders.value = await listAll();
 
-  if(saveOrders.value.length === 0) {
+  if (saveOrders.value.length === 0) {
     $q.notify({
       message: "No tiene perdidos guardados",
       color: 'primary'
@@ -144,6 +173,30 @@ const _showSaveOrders = async () => {
 }
 
 const _reloadOrder = (order: Order) => {
+  loadOrder(order)
+  showSaveOrders.value = false;
+}
+
+const _sync = async () => {
+  $q.loading.show({
+    message: "sincronizando usuarios",
+  })
+
+  const resultClients = await syncClients()
+
+  $q.loading.show({
+    message: resultClients ? "Clientes sincronizados, sincronizando Productos" : "Error sincronizando clientes, sincronizando Productos"
+  })
+
+  const resultProducst = await syncProducts();
+
+  $q.loading.hide();
+
+  $q.dialog({
+    title: 'Completado' + (resultClients && resultProducst ? "" : " con errores"),
+    message: `Productos: ${resultProducst ? "OK" : "ERROR"} <br> Clientes: ${resultClients ? "OK" : "ERROR"}`,
+    html: true
+  })
 
 }
 

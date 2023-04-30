@@ -33,6 +33,34 @@ const ProductService = {
       }
     })
 
+  },
+
+  async listAll() {
+    try {
+      const response = await axios.get<RawProduct[]>(`http://innova-backend.test/api/producto`,{
+        headers: {
+          "Authorization" : localStorage.getItem("token")
+        }
+      })
+
+      if(response.status !== 200) {
+        return null
+      }
+
+      return response.data.map<IProduct>(item => {
+        return {
+          codigo: item.codigo ? item.codigo.trim() : "",
+          name: item.producto,
+          cantByBox: item.cant_caja,
+          stock: item.stock_real,
+          url: "",
+          unitPrice: item.p_especial
+        }
+      })
+    }catch (e) {
+      console.log(e)
+      return  null;
+    }
   }
 }
 

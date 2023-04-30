@@ -1,5 +1,7 @@
 import {ref} from "vue";
 import ProductService from "src/shared/services/online/ProductService";
+import ClientServiceOffline from "src/shared/services/offline/ClientServiceOffline";
+import ProductServiceOffline from "src/shared/services/offline/ProductServiceOffline";
 
 export interface IProduct {
   name: string,
@@ -26,6 +28,20 @@ export const useProduct= () => {
         }
 
         return
+      }
+    },
+
+    async syncProducts() {
+      const hasConexion = window.navigator.onLine;
+
+      if (hasConexion) {
+        const result = await ProductService.listAll()
+
+        if(result === null) {
+          return false;
+        }
+
+        return await ProductServiceOffline.saveProductos(result)
       }
     }
   }

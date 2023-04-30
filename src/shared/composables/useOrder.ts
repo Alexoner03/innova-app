@@ -1,7 +1,7 @@
 import { ref} from "vue";
 import {IClient} from "src/shared/composables/useClient";
 import {IProduct} from "src/shared/composables/useProduct";
-import {db} from "src/shared/db";
+import {db, Order} from "src/shared/db";
 import OrderServiceOffline from "src/shared/services/offline/OrderServiceOffline";
 import {obtenerHoraActual} from "src/shared/utils";
 
@@ -29,6 +29,8 @@ export const enum STATES {
 }
 
 const addProductEvent = ref<number>(0);
+const reloadOrderEvent = ref<number>(0);
+const clearEvent = ref<number>(0);
 
 export const useOrder = () => {
   return {
@@ -36,6 +38,8 @@ export const useOrder = () => {
     client,
     comment,
     addProductEvent,
+    reloadOrderEvent,
+    clearEvent,
     setClient(_client: IClient) {
       client.value = _client;
     },
@@ -60,8 +64,14 @@ export const useOrder = () => {
       products.value = products.value.filter(item => item.name !== product.name)
     },
 
-    reset() {
+    async reset() {
+
+      if(id.value !== null) {
+        await OrderServiceOffline.delete(id.value);
+      }
+
       clear()
+      clearEvent.value++;
     },
 
     async saveOrder(): Promise<STATES> {
@@ -90,7 +100,7 @@ export const useOrder = () => {
           client: JSON.parse(JSON.stringify(client.value)),
           products: JSON.parse(JSON.stringify(products.value)),
           createdAt: obtenerHoraActual()
-        })
+        }, id.value)
 
         clear()
         return STATES.OK
@@ -102,6 +112,29 @@ export const useOrder = () => {
 
     listAll(){
       return OrderServiceOffline.list()
+    },
+
+    loadOrder(order: Order) {
+      client.value = {
+        name: order.client.name,
+        address: order.client.address,
+        ruc: order.client.ruc
+      }
+      id.value = order.id as number
+      comment.value = order.comment
+      products.value = order.products.map<IProductOrder>(item => {
+        return {
+          name: item.name,
+          cant: +item.cant,
+          stock: item.stock,
+          url: item.url,
+          unitPrice: item.unitPrice,
+          cantByBox: item.cantByBox,
+          codigo: item.codigo
+        }
+      })
+
+      reloadOrderEvent.value++;
     }
   }
 }

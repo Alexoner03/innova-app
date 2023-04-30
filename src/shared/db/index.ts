@@ -15,6 +15,7 @@ export class LocalDB extends Dexie {
   orders!: Table<Order>;
 
   clients!: Table<IClient & { createdAt: string, id?: number }>
+  products!: Table<IProduct & { createdAt: string, id?: number }>
 
   constructor() {
     super("innova");
@@ -25,6 +26,10 @@ export class LocalDB extends Dexie {
 
     this.version(1).stores({
       clients: '++id, name, ruc, address, createdAt'
+    })
+
+    this.version(1).stores({
+      products: '++id, name, stock, unitPrice, cantByBox, codigo, url'
     })
   }
 }

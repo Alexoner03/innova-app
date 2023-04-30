@@ -28,6 +28,26 @@ const ClientService = {
         ruc: item.ruc
       }
     })
+  },
+
+  async listAll() {
+    const response = await axios.get<RawClient[]>(`http://innova-backend.test/api/cliente`,{
+      headers: {
+        "Authorization" : localStorage.getItem("token")
+      }
+    })
+
+    if(response.status !== 200) {
+      return null
+    }
+
+    return response.data.map<IClient>(item => {
+      return {
+        name: item.cliente,
+        address: item.direccion,
+        ruc: item.ruc
+      }
+    })
   }
 }
 

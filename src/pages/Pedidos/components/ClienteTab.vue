@@ -1,5 +1,6 @@
 <template>
   <q-select
+    clearable
     behavior="menu"
     outlined
     v-model="model"
@@ -25,6 +26,7 @@
   </q-select>
 
   <q-select
+    clearable
     behavior="menu"
     outlined
     v-model="model"
@@ -59,6 +61,7 @@
   </q-select>
 
   <q-input
+    v-if="model"
     disable
     outlined
     type="text"
@@ -66,6 +69,16 @@
     label="Dirección"
   >
   </q-input>
+
+  <q-input
+    v-else
+    disable
+    outlined
+    type="text"
+    label="Dirección"
+  >
+  </q-input>
+
 
 </template>
 
@@ -75,15 +88,30 @@ import {IClient, useClient} from "src/shared/composables/useClient";
 import {useOrder} from "src/shared/composables/useOrder";
 
 const {clients, filterClients} = useClient()
-const {setClient} = useOrder()
+const {setClient, reloadOrderEvent, client, clearEvent} = useOrder()
+
+
 
 const model = ref<IClient>({
-  name: "",
-  ruc: "",
-  address: ""
+  name: client.value ? client.value.name : "",
+  ruc: client.value ? client.value.ruc : "",
+  address: client.value ? client.value.address : "",
 })
 
 watch(model, (value) => setClient(value))
+
+watch(reloadOrderEvent, () => {
+  options.value = [client.value!]
+  model.value = options.value[0];
+})
+
+watch(clearEvent, () => {
+  model.value = {
+    name: "",
+    ruc: "",
+    address: ""
+  }
+})
 
 const options = ref<IClient[]>([])
 

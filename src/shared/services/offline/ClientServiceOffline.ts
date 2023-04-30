@@ -1,4 +1,6 @@
 import {IClient} from "src/shared/composables/useClient";
+import {db} from "src/shared/db";
+import {obtenerHoraActual} from "src/shared/utils";
 
 const clients = [
   {
@@ -62,6 +64,23 @@ const ClientServiceOffline = {
       }
       resolve(clients.filter(item => item.ruc.toLowerCase().includes(value.toLowerCase())))
     })
+  },
+
+  async saveClients(clients: IClient[]) {
+    try {
+      await db.clients.clear()
+      await db.clients.bulkAdd(clients.map(item => {
+        return {
+          ...item,
+          createdAt: obtenerHoraActual()
+        }
+      }))
+
+      return true
+    }catch (e) {
+      console.log(e)
+      return false;
+    }
   }
 }
 

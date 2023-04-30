@@ -86,6 +86,11 @@ const fixed = ref(false)
 const productsList = ref<IProduct[]>([])
 
 function searchProduct(value: string) {
+
+  if(value.length <=3) {
+    return
+  }
+
   $q.loading.show();
 
   filterProducts(value).then(() => {

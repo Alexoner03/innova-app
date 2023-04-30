@@ -1,4 +1,4 @@
-import {reactive, ref} from "vue";
+import {ref} from "vue";
 import ClientService from "src/shared/services/online/ClientService";
 import ClientServiceOffline from "src/shared/services/offline/ClientServiceOffline";
 
@@ -30,6 +30,18 @@ export const useClient = () => {
       }
 
       clients.value = await ClientServiceOffline.filterClients(type, value)
+    },
+
+    async syncClients() {
+      const result = await ClientService.listAll();
+
+      if(result === null) {
+        return false;
+      }
+
+      return await ClientServiceOffline.saveClients(result)
+
+
     }
   }
 }
