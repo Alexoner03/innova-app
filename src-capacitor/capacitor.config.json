@@ -1,0 +1,7 @@
+{
+  "appId": "com.innova.app",
+  "appName": "Innova App",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

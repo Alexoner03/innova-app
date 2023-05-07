@@ -8,7 +8,7 @@
     :ripple="false"
     menu-anchor="bottom right"
   >
-    <q-list style="width: 170px">
+    <q-list style="width: 174px">
       <q-item clickable v-close-popup @click="_saveOrder">
         <q-item-section>
           <q-item-label>Guardar Pedido</q-item-label>
@@ -33,9 +33,9 @@
         </q-item-section>
       </q-item>
 
-      <q-item clickable v-close-popup>
+      <q-item clickable v-close-popup @click="_toggleOffline">
         <q-item-section>
-          <q-item-label>Trabajar Sin Conexion</q-item-label>
+          <q-item-label>Trabajar {{offline ? 'Con' : 'Sin'}} Conexion</q-item-label>
         </q-item-section>
       </q-item>
     </q-list>
@@ -103,8 +103,10 @@ import {ref} from "vue";
 import {Order} from "src/shared/db";
 import {useClient} from "src/shared/composables/useClient";
 import {useProduct} from "src/shared/composables/useProduct";
+import {useConfig} from "src/shared/composables/useConfig";
 
 const {saveOrder, reset, listAll, loadOrder} = useOrder()
+const {offline, toggleOffline} = useConfig()
 const {syncClients} = useClient()
 const {syncProducts} = useProduct()
 const $q = useQuasar();
@@ -175,6 +177,13 @@ const _showSaveOrders = async () => {
 const _reloadOrder = (order: Order) => {
   loadOrder(order)
   showSaveOrders.value = false;
+}
+
+const _toggleOffline = () => {
+  toggleOffline()
+  $q.notify({
+    message: `Trabajando ${offline.value ? 'sin' : 'con'} conexion`
+  })
 }
 
 const _sync = async () => {
