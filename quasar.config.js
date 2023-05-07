@@ -15,6 +15,10 @@ const { configure } = require('quasar/wrappers');
 module.exports = configure(function (/* ctx */) {
   return {
 
+    bin: {
+      windowsAndroidStudio: "C:\\Users\\Alexander\\AppData\\Local\\JetBrains\\Toolbox\\apps\\AndroidStudio\\ch-0\\221.6008.13.2211.9477386\\bin\\studio64.exe"
+    },
+
 
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
     // preFetch: true,

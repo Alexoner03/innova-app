@@ -5,7 +5,6 @@
     style="width: 100%"
   >
     <q-input
-      color="white"
       bg-color="white"
       outlined
       v-model="user"
@@ -17,7 +16,6 @@
 
     <q-input
       filled
-      color="white"
       bg-color="white"
       :type="isPwd ? 'password' : 'text'"
       v-model="password"

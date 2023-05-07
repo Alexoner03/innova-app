@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
-    "dev": "quasar dev -m pwa",
+    "dev": "quasar dev",
     "build": "quasar build -m pwa"
   },
   "dependencies": {

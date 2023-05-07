@@ -1,9 +1,9 @@
 <template>
-  <div class="relative-position" style="width: 100vw; height: 100vh overflow: hidden">
+  <div class="relative-position" style="width: 100vw; height: 100vh; overflow: hidden">
     <div style="z-index: 1" class="page-size bg absolute"></div>
     <div style="z-index: 2" class="page-size blur absolute"></div>
     <div style="z-index: 3" class="page-size page-content absolute">
-      <div class="flex column justify-center items-center" style="height: 100%">
+      <div class="flex column justify-center items-center no-wrap" style="height: 100%">
         <h1>INNOVA</h1>
         <div class="q-px-xl" style="width: 100%">
           <LoginForm></LoginForm>
