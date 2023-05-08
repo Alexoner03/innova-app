@@ -3,8 +3,5 @@
   "appName": "Innova App",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "www",
-  "server": {
-    "url": "http://192.168.18.31:9000"
-  }
+  "webDir": "www"
 }

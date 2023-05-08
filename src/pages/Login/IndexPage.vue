@@ -1,6 +1,6 @@
 <template>
   <div class="relative-position" style="width: 100vw; height: 100vh; overflow: hidden">
-    <div style="z-index: 1" class="page-size bg absolute"></div>
+    <div style="z-index: 1; background-image: url('/bg.png')" class="page-size bg absolute"></div>
     <div style="z-index: 2" class="page-size blur absolute"></div>
     <div style="z-index: 3" class="page-size page-content absolute">
       <div class="flex column justify-center items-center no-wrap" style="height: 100%">
@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import LoginForm from "pages/Login/components/LoginForm.vue";
+
 </script>
 
 <style scoped>
@@ -25,7 +26,6 @@ import LoginForm from "pages/Login/components/LoginForm.vue";
 }
 
 .bg {
-  background: url("bg.jpg") no-repeat center;
   background-size: cover;
 }
 

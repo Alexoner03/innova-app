@@ -1,4 +1,5 @@
 import axios from "axios";
+import {BACKEND_URL} from "src/shared/constants";
 
 export interface IUser {
   id: number
@@ -20,7 +21,7 @@ const AuthService = {
   async login(creds: {user: string, password: string}){
 
     try {
-      const response = await axios.post<{auth: Token, user: IUser}>("http://innova-backend.test/api/auth/login", {
+      const response = await axios.post<{auth: Token, user: IUser}>(`${BACKEND_URL}/api/auth/login`, {
         usuario: creds.user,
         password: creds.password
       })

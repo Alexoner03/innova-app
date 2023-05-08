@@ -1,5 +1,6 @@
 import {IProduct} from "src/shared/composables/useProduct";
 import axios from "axios";
+import {BACKEND_URL} from "src/shared/constants";
 
 interface RawProduct {
   producto: string
@@ -12,7 +13,7 @@ interface RawProduct {
 
 const ProductService = {
   async searchProduct(value: string) {
-    const response = await axios.get<RawProduct[]>(`http://innova-backend.test/api/producto/filter?value=${value.toLowerCase()}`,{
+    const response = await axios.get<RawProduct[]>(`${BACKEND_URL}/api/producto/filter?value=${value.toLowerCase()}`,{
       headers: {
         "Authorization" : localStorage.getItem("token")
       }
@@ -37,7 +38,7 @@ const ProductService = {
 
   async listAll() {
     try {
-      const response = await axios.get<RawProduct[]>(`http://innova-backend.test/api/producto`,{
+      const response = await axios.get<RawProduct[]>(`${BACKEND_URL}/api/producto`,{
         headers: {
           "Authorization" : localStorage.getItem("token")
         }

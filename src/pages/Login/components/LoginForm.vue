@@ -34,7 +34,12 @@
     </q-input>
 
     <div class="flex justify-center">
-      <q-btn label="Iniciar sesión" type="submit" color="orange-10"/>
+      <q-btn label="Iniciar sesión" type="submit" color="orange-10"         :loading="submitting"
+      >
+        <template v-slot:loading>
+          <q-spinner-facebook />
+        </template>
+      </q-btn>
     </div>
   </q-form>
 </template>
@@ -52,22 +57,24 @@ const auth = useAuth()
 const user = ref(null)
 const password = ref(null)
 const isPwd = ref(true)
+const submitting = ref(false)
 
 async function onSubmit() {
-
+  submitting.value = true;
   const result = await auth.login(user.value!, password.value!)
 
   if (result === null) {
     $q.notify({
       color: 'negative', message: 'Credenciales incorrectas'
     })
+    submitting.value = false;
     return
   }
 
   $q.notify({
     color: 'green', message: 'Sesión iniciada'
   })
-
+  submitting.value = false;
   router.push({name: "pedidos"})
 }
 

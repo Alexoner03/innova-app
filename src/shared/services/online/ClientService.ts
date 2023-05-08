@@ -1,5 +1,6 @@
 import {IClient} from "src/shared/composables/useClient";
 import axios from "axios";
+import {BACKEND_URL} from "src/shared/constants";
 
 interface RawClient {
   id_cliente: number
@@ -11,7 +12,7 @@ interface RawClient {
 const ClientService = {
   async filterClients(type: "name" | "ruc", value: string) {
 
-    const response = await axios.get<RawClient[]>(`http://innova-backend.test/api/cliente/filter?type=${type}&value=${value.toLowerCase()}`,{
+    const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente/filter?type=${type}&value=${value.toLowerCase()}`,{
       headers: {
         "Authorization" : localStorage.getItem("token")
       }
@@ -31,7 +32,7 @@ const ClientService = {
   },
 
   async listAll() {
-    const response = await axios.get<RawClient[]>(`http://innova-backend.test/api/cliente`,{
+    const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente`,{
       headers: {
         "Authorization" : localStorage.getItem("token")
       }
