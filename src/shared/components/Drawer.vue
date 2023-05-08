@@ -59,6 +59,12 @@ const Menu = [
     icon: 'sell',
     link: 'https://quasar.dev'
   },
+  {
+    title: 'Deudas',
+    url: '/deudas',
+    icon: 'payments',
+    link: 'https://quasar.dev'
+  },
 ];
 
 

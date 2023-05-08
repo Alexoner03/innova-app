@@ -20,6 +20,18 @@ const routes: RouteRecordRaw[] = [
   },
 
   {
+    path: '/deudas',
+    component: () => import('pages/Deudas/layouts/Layout.vue'),
+    children: [
+      {
+        path: "",
+        component: () => import('pages/Deudas/Index.vue'),
+        name: "pedidos"
+      }
+    ],
+  },
+
+  {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
   },
