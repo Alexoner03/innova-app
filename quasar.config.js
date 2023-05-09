@@ -16,7 +16,8 @@ module.exports = configure(function (/* ctx */) {
   return {
 
     bin: {
-      windowsAndroidStudio: "C:\\Users\\giulliano.ortiz\\AppData\\Local\\JetBrains\\Toolbox\\apps\\AndroidStudio\\ch-0\\221.6008.13.2211.9514443\\bin\\studio64.exe"
+      windowsAndroidStudio: "C:\\Users\\Alexander\\AppData\\Local\\JetBrains\\Toolbox\\apps\\AndroidStudio\\ch-0\\221.6008.13.2211.9477386\\bin\\studio64.exe"
+      /*windowsAndroidStudio: "C:\\Users\\giulliano.ortiz\\AppData\\Local\\JetBrains\\Toolbox\\apps\\AndroidStudio\\ch-0\\221.6008.13.2211.9514443\\bin\\studio64.exe"*/
     },
 
 

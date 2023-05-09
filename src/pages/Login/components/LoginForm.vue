@@ -34,10 +34,10 @@
     </q-input>
 
     <div class="flex justify-center">
-      <q-btn label="Iniciar sesión" type="submit" color="orange-10"         :loading="submitting"
+      <q-btn label="Iniciar sesión" type="submit" color="orange-10" :loading="submitting"
       >
         <template v-slot:loading>
-          <q-spinner-facebook />
+          <q-spinner-facebook/>
         </template>
       </q-btn>
     </div>
@@ -74,8 +74,8 @@ async function onSubmit() {
   $q.notify({
     color: 'green', message: 'Sesión iniciada'
   })
-  submitting.value = false;
-  router.push({name: "pedidos"})
+
+  router.replace({name: "pedidos"}).then(() => submitting.value = false)
 }
 
 </script>
