@@ -70,15 +70,16 @@
 import {useDebt} from "src/shared/composables/useDebt";
 import {ref} from "vue";
 import {useQuasar} from "quasar";
-import {IDebt} from "src/shared/services/online/DebtService";
+import debtService, {IAdvacement, IDebt} from "src/shared/services/online/DebtService";
 
 const {debts, listDebts} = useDebt()
 const $q = useQuasar()
 const isLoading = ref(false)
 const prompt = ref(false)
 const fixed = ref(false)
-const advancement = ref(0)
-const selectedItem = ref<IDebt | null>(null)
+const advancement = ref<number>()
+const selectedItem = ref<IDebt | null>(null);
+const listAdvacements = ref<IAdvacement[]>([])
 
 const load = async () => {
   $q.loading.show({message: "Cargando deudas"})
@@ -108,24 +109,37 @@ const showAdvancementModal = (item: IDebt) => {
   prompt.value = true;
 }
 
-const loadAdvancements = (item: IDebt) => {
+const loadAdvancements = async (item: IDebt) => {
   $q.loading.show({message: "Cargando Adelantos"})
-  setTimeout(() => {
-    fixed.value = true
+
+  const result = await debtService.listAdvacements(item.serieventas)
+
+  if (result !== null) {
+    listAdvacements.value = result;
     $q.loading.hide()
-  }, 1000)
+    fixed.value = true;
+    return
+  }
+
+  $q.notify({message: "Esta venta no tiene adelantos", color: 'warning'})
+  $q.loading.hide()
+  return
 }
 
 const confirmAddAdvacement = () => {
-  if(!(/^\d+(\.\d{1,2})?$/.test(advancement.value.toString()))){
+  if(!(/^\d+(\.\d{1,2})?$/.test(advancement.value?.toString() ?? ""))){
     $q.notify({message: "Debe ingresar un numero valido"})
     return
   }
 
-  if(advancement.value <= 0) {
+  if(advancement.value && advancement.value <= 0) {
     $q.notify({message: "El monto debe ser mayor a 0"})
     return
   }
+
+  advancement.value = undefined;
+  $q.notify({message: "Adelanto guardado"})
+  prompt.value = false;
 }
 
 load()

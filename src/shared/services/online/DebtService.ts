@@ -12,6 +12,12 @@ export interface IDebt {
   serieventas: string
 }
 
+export interface IAdvacement {
+  fecha: string,
+  adelanto: number,
+  encargado: string
+}
+
 const DebtService = {
   async list(client: string = "") {
     const response = await axios.get<IDebt[]>(`${BACKEND_URL}/api/venta`, {
@@ -24,6 +30,23 @@ const DebtService = {
     })
 
     if (response.status !== 200) {
+      return null
+    }
+
+    return response.data;
+  },
+
+  async listAdvacements(serie: string) {
+    const response = await axios.get<IAdvacement[]>(`${BACKEND_URL}/api/venta/adelanto`, {
+      params: {
+        serie: serie
+      },
+      headers: {
+        "Authorization": localStorage.getItem("token")
+      }
+    })
+
+    if (response.status !== 200 || response.data.length === 0) {
       return null
     }
 
