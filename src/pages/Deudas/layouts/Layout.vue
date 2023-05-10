@@ -19,7 +19,7 @@
 
     <Drawer></Drawer>
 
-    <q-page-container>
+    <q-page-container style="position: relative">
       <router-view></router-view>
     </q-page-container>
   </q-layout>
