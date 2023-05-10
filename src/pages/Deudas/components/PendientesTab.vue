@@ -75,7 +75,7 @@ import {ref} from "vue";
 import {useQuasar} from "quasar";
 import debtService, {IAdvacement, IDebt} from "src/shared/services/online/DebtService";
 
-const {debts, listDebts} = useDebt()
+const {debts, addAdvacement, listDebts} = useDebt()
 const $q = useQuasar()
 const isLoading = ref(false)
 const prompt = ref(false)
@@ -139,6 +139,13 @@ const confirmAddAdvacement = () => {
     $q.notify({message: "El monto debe ser mayor a 0"})
     return
   }
+
+  addAdvacement({
+    serie: selectedItem.value!.serieventas,
+    acuenta: advancement.value!,
+    cliente: selectedItem.value!.cliente,
+    pendiente: selectedItem.value!.pendiente,
+  })
 
   advancement.value = undefined;
   $q.notify({message: "Adelanto guardado"})
