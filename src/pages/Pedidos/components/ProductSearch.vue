@@ -6,7 +6,7 @@
       filled
       bg-color="white"
       dense
-      placeholder="Search"
+      placeholder="Buscar Producto"
       @update:model-value="searchProduct"
     >
       <template v-slot:append>
@@ -91,7 +91,7 @@ function searchProduct(value: string) {
     return
   }
 
-  $q.loading.show();
+  $q.loading.show({message: "Buscando productos"});
 
   filterProducts(value).then(() => {
 
