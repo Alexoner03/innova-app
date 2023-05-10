@@ -12,43 +12,52 @@ interface RawClient {
 const ClientService = {
   async filterClients(type: "name" | "ruc", value: string) {
 
-    const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente/filter?type=${type}&value=${value.toLowerCase()}`,{
-      headers: {
-        "Authorization" :"Bearer "+ localStorage.getItem("token")
-      }
-    })
+    try {
+      const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente/filter?type=${type}&value=${value.toLowerCase()}`,{
+        headers: {
+          "Authorization" :"Bearer "+ localStorage.getItem("token")
+        }
+      })
 
-    if(response.status !== 200) {
+      if(response.status !== 200) {
+        return null
+      }
+
+      return response.data.map<IClient>(item => {
+        return {
+          name: item.cliente,
+          address: item.direccion,
+          ruc: item.ruc
+        }
+      })
+    }
+    catch (e) {
       return null
     }
-
-    return response.data.map<IClient>(item => {
-      return {
-        name: item.cliente,
-        address: item.direccion,
-        ruc: item.ruc
-      }
-    })
   },
 
   async listAll() {
-    const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente`,{
-      headers: {
-        "Authorization" :"Bearer "+ localStorage.getItem("token")
-      }
-    })
+    try {
+      const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente`,{
+        headers: {
+          "Authorization" :"Bearer "+ localStorage.getItem("token")
+        }
+      })
 
-    if(response.status !== 200) {
+      if(response.status !== 200) {
+        return null
+      }
+
+      return response.data.map<IClient>(item => {
+        return {
+          name: item.cliente,
+          address: item.direccion,
+          ruc: item.ruc
+        }
+      })
+    }catch (e) {
       return null
     }
-
-    return response.data.map<IClient>(item => {
-      return {
-        name: item.cliente,
-        address: item.direccion,
-        ruc: item.ruc
-      }
-    })
   }
 }
 

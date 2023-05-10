@@ -20,37 +20,45 @@ export interface IAdvacement {
 
 const DebtService = {
   async list(client: string = "") {
-    const response = await axios.get<IDebt[]>(`${BACKEND_URL}/api/venta`, {
-      params: {
-        cliente: client !== "" ? client : undefined
-      },
-      headers: {
-        "Authorization":  "Bearer "+localStorage.getItem("token")
-      }
-    })
+    try {
+      const response = await axios.get<IDebt[]>(`${BACKEND_URL}/api/venta`, {
+        params: {
+          cliente: client !== "" ? client : undefined
+        },
+        headers: {
+          "Authorization":  "Bearer "+localStorage.getItem("token")
+        }
+      })
 
-    if (response.status !== 200) {
+      if (response.status !== 200) {
+        return null
+      }
+
+      return response.data;
+    }catch (e) {
       return null
     }
-
-    return response.data;
   },
 
   async listAdvacements(serie: string) {
-    const response = await axios.get<IAdvacement[]>(`${BACKEND_URL}/api/venta/adelanto`, {
-      params: {
-        serie: serie
-      },
-      headers: {
-        "Authorization": "Bearer "+localStorage.getItem("token")
-      }
-    })
+    try {
+      const response = await axios.get<IAdvacement[]>(`${BACKEND_URL}/api/venta/adelanto`, {
+        params: {
+          serie: serie
+        },
+        headers: {
+          "Authorization": "Bearer "+localStorage.getItem("token")
+        }
+      })
 
-    if (response.status !== 200 || response.data.length === 0) {
+      if (response.status !== 200) {
+        return null
+      }
+
+      return response.data;
+    }catch (e) {
       return null
     }
-
-    return response.data;
   }
 }
 

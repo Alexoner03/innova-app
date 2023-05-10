@@ -15,6 +15,15 @@
       </template>
     </q-input>
   </q-toolbar-title>
+
+  <q-btn
+    color="transparent"
+    icon="autorenew"
+    unelevated
+    dense
+    :ripple="false"
+    menu-anchor="bottom right" @click="loadDebts"
+  />
 </template>
 
 <script setup lang="ts">
@@ -26,14 +35,14 @@ import {useDebt} from "src/shared/composables/useDebt";
 const search = ref("")
 const {tab} = useTab()
 const $q = useQuasar()
-const {listDebts} = useDebt()
+const {debts, listDebts} = useDebt()
 
 function changeTab() {
   tab.value = 'Pendientes'
 }
 
 async function searchDebt(value: string) {
-  if(value.length <=3) {
+  if (value.length <= 3) {
     return
   }
 
@@ -41,9 +50,24 @@ async function searchDebt(value: string) {
 
   const result = await listDebts(value)
 
-  if(result) {
+  if (result) {
+    $q.notify({message: debts.value.length === 0 ? "No se encontraron deudas" : "Deudas cargadas con exito"})
+  } else {
+    $q.notify({message: "Error cargando deudas", color: 'negative'})
+  }
+
+  search.value = ""
+  $q.loading.hide()
+}
+
+async function loadDebts() {
+  $q.loading.show({message: "Buscando clientes"});
+
+  const result = await listDebts()
+
+  if (result) {
     $q.notify({message: "Deudas cargadas con exito"})
-  } else{
+  } else {
     $q.notify({message: "Error cargando deudas", color: 'negative'})
   }
 

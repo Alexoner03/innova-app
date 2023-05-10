@@ -123,15 +123,21 @@ const loadAdvancements = async (item: IDebt) => {
   listAdvacements.value = [];
   const result = await debtService.listAdvacements(item.serieventas)
 
-  if (result !== null) {
-    listAdvacements.value = result;
+  if (result === null) {
+    $q.notify({message: "Error cargando adelantos", color: 'negative'})
     $q.loading.hide()
-    fixed.value = true;
     return
   }
 
-  $q.notify({message: "Esta venta no tiene adelantos", color: 'warning'})
+  if(result.length === 0) {
+    $q.notify({message: "Esta venta no tiene adelantos", color: 'warning'})
+    $q.loading.hide()
+    return
+  }
+
+  listAdvacements.value = result;
   $q.loading.hide()
+  fixed.value = true;
   return
 }
 
