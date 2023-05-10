@@ -48,12 +48,15 @@
 
       <q-separator />
 
-      <q-card-section style="max-height: 50vh; width: 80vw; max-width: 80vw" class="scroll">
-        <div v-for="n in 15" :key="n">
-          <p>Nombre</p>
-          <p>fecha</p>
-          <p>monto</p>
-        </div>
+      <q-card-section style="max-height: 50vh; width: 80vw; max-width: 80vw" class="scroll q-pa-none">
+        <q-list separator bordered>
+          <q-item v-for="item in listAdvacements" dense>
+            <div class="flex column full-width">
+              <p class="q-mb-none text-primary full-width">{{item.encargado}} <span style="float: right; text-align: right">{{item.fecha}}</span></p>
+              <p class="q-mb-none">S/. {{item.adelanto.toFixed(2)}}</p>
+            </div>
+          </q-item>
+        </q-list>
       </q-card-section>
 
       <q-separator />
@@ -111,7 +114,7 @@ const showAdvancementModal = (item: IDebt) => {
 
 const loadAdvancements = async (item: IDebt) => {
   $q.loading.show({message: "Cargando Adelantos"})
-
+  listAdvacements.value = [];
   const result = await debtService.listAdvacements(item.serieventas)
 
   if (result !== null) {
