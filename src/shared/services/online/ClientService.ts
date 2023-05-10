@@ -14,7 +14,7 @@ const ClientService = {
 
     const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente/filter?type=${type}&value=${value.toLowerCase()}`,{
       headers: {
-        "Authorization" : localStorage.getItem("token")
+        "Authorization" :"Bearer "+ localStorage.getItem("token")
       }
     })
 
@@ -34,7 +34,7 @@ const ClientService = {
   async listAll() {
     const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente`,{
       headers: {
-        "Authorization" : localStorage.getItem("token")
+        "Authorization" :"Bearer "+ localStorage.getItem("token")
       }
     })
 

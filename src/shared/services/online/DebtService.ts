@@ -25,7 +25,7 @@ const DebtService = {
         cliente: client !== "" ? client : undefined
       },
       headers: {
-        "Authorization": localStorage.getItem("token")
+        "Authorization":  "Bearer "+localStorage.getItem("token")
       }
     })
 
@@ -42,7 +42,7 @@ const DebtService = {
         serie: serie
       },
       headers: {
-        "Authorization": localStorage.getItem("token")
+        "Authorization": "Bearer "+localStorage.getItem("token")
       }
     })
 

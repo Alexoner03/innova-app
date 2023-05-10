@@ -15,7 +15,7 @@ const ProductService = {
   async searchProduct(value: string) {
     const response = await axios.get<RawProduct[]>(`${BACKEND_URL}/api/producto/filter?value=${value.toLowerCase()}`,{
       headers: {
-        "Authorization" : localStorage.getItem("token")
+        "Authorization" :"Bearer "+ localStorage.getItem("token")
       }
     })
 
@@ -40,7 +40,7 @@ const ProductService = {
     try {
       const response = await axios.get<RawProduct[]>(`${BACKEND_URL}/api/producto`,{
         headers: {
-          "Authorization" : localStorage.getItem("token")
+          "Authorization" :"Bearer "+ localStorage.getItem("token")
         }
       })
 
