@@ -29,11 +29,11 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
 import PendientesTab from "pages/Deudas/components/PendientesTab.vue";
 import AdelantosTab from "pages/Deudas/components/AdelantosTab.vue";
+import {useTab} from "pages/Deudas/composables/useTab";
 
-const tab = ref("Pendientes");
+const {tab} = useTab()
 </script>
 
 <style scoped>
