@@ -80,11 +80,17 @@ const $q = useQuasar()
 const isLoading = ref(false)
 const prompt = ref(false)
 const fixed = ref(false)
-const advancement = ref<number>()
+const advancement = ref("")
 const selectedItem = ref<IDebt | null>(null);
 const listAdvacements = ref<IAdvacement[]>([])
 
 const load = async () => {
+
+  if(debts.value.length > 0)
+  {
+    return
+  }
+
   $q.loading.show({message: "Cargando deudas"})
   isLoading.value = true
 
@@ -135,19 +141,21 @@ const confirmAddAdvacement = () => {
     return
   }
 
-  if(advancement.value && advancement.value <= 0) {
+  const value = parseInt(advancement.value)
+
+  if(value && value <= 0) {
     $q.notify({message: "El monto debe ser mayor a 0"})
     return
   }
 
   addAdvacement({
     serie: selectedItem.value!.serieventas,
-    acuenta: advancement.value!,
+    acuenta: value,
     cliente: selectedItem.value!.cliente,
     pendiente: selectedItem.value!.pendiente,
   })
 
-  advancement.value = undefined;
+  advancement.value = "";
   $q.notify({message: "Adelanto guardado"})
   prompt.value = false;
 }

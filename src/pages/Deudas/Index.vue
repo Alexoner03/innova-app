@@ -20,8 +20,8 @@
       <pendientes-tab />
     </q-tab-panel>
 
-    <q-tab-panel name="Adelantos">
-      Adelantos
+    <q-tab-panel name="Adelantos" class="q-pa-none">
+      <adelantos-tab></adelantos-tab>
     </q-tab-panel>
 
   </q-tab-panels>
@@ -31,6 +31,7 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import PendientesTab from "pages/Deudas/components/PendientesTab.vue";
+import AdelantosTab from "pages/Deudas/components/AdelantosTab.vue";
 
 const tab = ref("Pendientes");
 </script>
