@@ -13,7 +13,7 @@
 
         <product-search></product-search>
 
-        <q-btn round color="primary" unelevated :ripple="false" icon="mail" />
+        <q-btn round color="primary" unelevated :ripple="false" icon="mail" @click="sendOrder" />
 
         <option-button></option-button>
       </q-toolbar>
@@ -43,12 +43,14 @@ import {useDrawer} from "src/shared/composables/useDrawer";
 import Drawer from "src/shared/components/Drawer.vue";
 import OptionButton from "pages/Pedidos/components/OptionButton.vue";
 import ProductSearch from "pages/Pedidos/components/ProductSearch.vue";
-import {useOrder} from "src/shared/composables/useOrder";
+import {STATES, useOrder} from "src/shared/composables/useOrder";
 import {computed} from "vue";
+import {useQuasar} from "quasar";
 
 
 const {toggle} = useDrawer()
-const {products} = useOrder();
+const {products, uploadOrder} = useOrder();
+const $q = useQuasar();
 
 const totalOrder = computed(() => {
   return products.value.reduce((previousValue, curr) => previousValue + parseFloat((curr.cant * curr.unitPrice).toFixed(2)),0)
@@ -57,4 +59,30 @@ const totalOrder = computed(() => {
 function toggleLeftDrawer() {
   toggle();
 }
+
+async function sendOrder() {
+  const result = await uploadOrder();
+
+  switch (result) {
+    case STATES.OK:
+      $q.notify({message: "Pedido enviado", color: 'green'});
+      break;
+    case STATES.EXCEED_ERROR:
+      $q.notify({message: "Productos exceden el stock", color: 'red'});
+      break;
+    case STATES.CLIENT_ERROR:
+      $q.notify({message: "Seleccione un cliente", color: 'red'});
+      break;
+    case STATES.UNKNOWN:
+      $q.notify({message: "Error desconocido", color: 'red'});
+      break;
+    case STATES.TOTAL_MIN_ERROR:
+      $q.notify({message: "El total debe ser mayor a 0", color: 'red'});
+      break;
+    case STATES.PRODUCT_LENGTH_ERROR:
+      $q.notify({message: "Seleccione un producto", color: 'red'});
+      break;
+  }
+}
+
 </script>

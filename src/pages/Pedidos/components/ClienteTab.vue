@@ -93,6 +93,7 @@ const {setClient, reloadOrderEvent, client, clearEvent} = useOrder()
 
 
 const model = ref<IClient>({
+  client_id: client.value ? client.value.client_id : -1,
   name: client.value ? client.value.name : "",
   ruc: client.value ? client.value.ruc : "",
   address: client.value ? client.value.address : "",
@@ -107,6 +108,7 @@ watch(reloadOrderEvent, () => {
 
 watch(clearEvent, () => {
   model.value = {
+    client_id: -1,
     name: "",
     ruc: "",
     address: ""

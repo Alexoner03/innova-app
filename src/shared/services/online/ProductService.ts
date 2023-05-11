@@ -26,6 +26,7 @@ const ProductService = {
 
       return response.data.map<IProduct>(item => {
         return {
+          product_id: item.id,
           codigo: item.codigo,
           name: item.producto,
           cantByBox: item.cant_caja,
@@ -54,6 +55,7 @@ const ProductService = {
 
       return response.data.map<IProduct>(item => {
         return {
+          product_id: item.id,
           codigo: item.codigo ? item.codigo.trim() : "",
           name: item.producto,
           cantByBox: item.cant_caja,

@@ -25,11 +25,11 @@ export class LocalDB extends Dexie {
     });
 
     this.version(1).stores({
-      clients: '++id, name, ruc, address, createdAt'
+      clients: '++id, client_id, name, ruc, address, createdAt'
     })
 
     this.version(1).stores({
-      products: '++id, name, stock, unitPrice, cantByBox, codigo, url'
+      products: '++id, product_id, name, stock, unitPrice, cantByBox, codigo, url'
     })
   }
 }

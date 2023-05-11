@@ -110,12 +110,49 @@ export const useOrder = () => {
       }
     },
 
+    async uploadOrder(): Promise<STATES> {
+
+      if(client.value === null) {
+        return STATES.CLIENT_ERROR
+      }
+
+      if(products.value.length <= 0) {
+        return STATES.PRODUCT_LENGTH_ERROR
+      }
+
+      const totalOrder = products.value.reduce((previousValue, curr) => previousValue + parseFloat((curr.cant * curr.unitPrice).toFixed(2)),0)
+      if(totalOrder <= 0) {
+        return STATES.TOTAL_MIN_ERROR
+      }
+
+      const sameExcced = products.value.some(item => item.cant > item.stock)
+      if(sameExcced) {
+        return STATES.EXCEED_ERROR
+      }
+
+      try {
+        await OrderServiceOffline.save({
+          comment: comment.value.toString(),
+          client: JSON.parse(JSON.stringify(client.value)),
+          products: JSON.parse(JSON.stringify(products.value)),
+          createdAt: obtenerHoraActual()
+        }, id.value)
+
+        clear()
+        return STATES.OK
+      }catch (e) {
+        console.error(e)
+        return STATES.UNKNOWN
+      }
+    },
+
     listAll(){
       return OrderServiceOffline.list()
     },
 
     loadOrder(order: Order) {
       client.value = {
+        client_id: order.client.client_id,
         name: order.client.name,
         address: order.client.address,
         ruc: order.client.ruc
@@ -124,6 +161,7 @@ export const useOrder = () => {
       comment.value = order.comment
       products.value = order.products.map<IProductOrder>(item => {
         return {
+          product_id: item.product_id,
           name: item.name,
           cant: +item.cant,
           stock: item.stock,

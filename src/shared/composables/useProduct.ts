@@ -4,6 +4,7 @@ import ClientServiceOffline from "src/shared/services/offline/ClientServiceOffli
 import ProductServiceOffline from "src/shared/services/offline/ProductServiceOffline";
 
 export interface IProduct {
+  product_id: number,
   name: string,
   stock: number,
   unitPrice: number,

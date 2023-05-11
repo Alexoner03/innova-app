@@ -3,6 +3,7 @@ import ClientService from "src/shared/services/online/ClientService";
 import ClientServiceOffline from "src/shared/services/offline/ClientServiceOffline";
 
 export interface IClient {
+  client_id: number,
   name: string,
   ruc: string,
   address: string,

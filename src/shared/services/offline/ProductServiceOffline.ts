@@ -5,8 +5,10 @@ import {IProduct} from "src/shared/composables/useProduct";
 
 
 const ProductServiceOffline = {
-  async filterProducts(value: string) {
-
+  filterProducts(value: string) {
+    return db.products
+      .filter(x => x.name.toLowerCase().includes(value.toLowerCase()))
+      .toArray()
   },
 
   async saveProductos(products: IProduct[]) {

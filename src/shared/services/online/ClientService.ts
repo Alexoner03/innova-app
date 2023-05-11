@@ -25,6 +25,7 @@ const ClientService = {
 
       return response.data.map<IClient>(item => {
         return {
+          client_id: item.id_cliente,
           name: item.cliente,
           address: item.direccion,
           ruc: item.ruc
@@ -50,6 +51,7 @@ const ClientService = {
 
       return response.data.map<IClient>(item => {
         return {
+          client_id: item.id_cliente,
           name: item.cliente,
           address: item.direccion,
           ruc: item.ruc
