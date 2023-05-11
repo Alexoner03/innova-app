@@ -1,6 +1,7 @@
 import {ref} from "vue";
 import ClientService from "src/shared/services/online/ClientService";
 import ClientServiceOffline from "src/shared/services/offline/ClientServiceOffline";
+import {useConfig} from "src/shared/composables/useConfig";
 
 export interface IClient {
   client_id: number,
@@ -11,14 +12,14 @@ export interface IClient {
 }
 
 const clients = ref<IClient[]>([])
-
+const {offline} = useConfig()
 
 export const useClient = () => {
   return {
     clients,
     async filterClients(type: "name" | "ruc", value: string) {
 
-      const hasConexion = window.navigator.onLine;
+      const hasConexion = window.navigator.onLine && !offline.value;
 
       if (hasConexion) {
         const result = await ClientService.filterClients(type, value)

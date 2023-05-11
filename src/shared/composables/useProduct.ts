@@ -1,7 +1,7 @@
 import {ref} from "vue";
 import ProductService from "src/shared/services/online/ProductService";
-import ClientServiceOffline from "src/shared/services/offline/ClientServiceOffline";
 import ProductServiceOffline from "src/shared/services/offline/ProductServiceOffline";
+import {useConfig} from "src/shared/composables/useConfig";
 
 export interface IProduct {
   product_id: number,
@@ -14,12 +14,13 @@ export interface IProduct {
 }
 
 const products = ref<IProduct[]>([])
-
+const {offline} = useConfig()
 export const useProduct= () => {
   return {
     products,
+
     async filterProducts(value: string) {
-      const hasConexion = window.navigator.onLine;
+      const hasConexion = window.navigator.onLine && !offline.value;
 
       if (hasConexion) {
         const result = await ProductService.searchProduct(value)
@@ -27,8 +28,12 @@ export const useProduct= () => {
         if(result !== null) {
           products.value = result;
         }
+      }
 
-        return
+      const result = await ProductServiceOffline.filterProducts(value)
+
+      if(result !== null) {
+        products.value = result;
       }
     },
 
