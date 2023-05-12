@@ -4,6 +4,7 @@ import {IProduct} from "src/shared/composables/useProduct";
 import {db, Order} from "src/shared/db";
 import OrderServiceOffline from "src/shared/services/offline/OrderServiceOffline";
 import {obtenerHoraActual} from "src/shared/utils";
+import OrderService from "src/shared/services/online/OrderService";
 
 export type IProductOrder = IProduct & { cant: number };
 
@@ -131,15 +132,27 @@ export const useOrder = () => {
       }
 
       try {
-        await OrderServiceOffline.save({
+
+        const result = await OrderService.sendOrder({
           comment: comment.value.toString(),
           client: JSON.parse(JSON.stringify(client.value)),
           products: JSON.parse(JSON.stringify(products.value)),
           createdAt: obtenerHoraActual()
-        }, id.value)
+        })
+
+        if(!result)
+        {
+          throw new Error("ERROR GUARDANDO")
+        }
+
+        if(id.value !== null)
+        {
+          await OrderServiceOffline.delete(id.value)
+        }
 
         clear()
         return STATES.OK
+
       }catch (e) {
         console.error(e)
         return STATES.UNKNOWN
