@@ -17,6 +17,7 @@ const clear = () => {
   client.value = null
   comment.value = ""
   products.value = []
+  id.value = null;
 }
 
 export const enum STATES {

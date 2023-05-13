@@ -46,9 +46,11 @@ import ProductSearch from "pages/Pedidos/components/ProductSearch.vue";
 import {STATES, useOrder} from "src/shared/composables/useOrder";
 import {computed} from "vue";
 import {useQuasar} from "quasar";
+import {useConfig} from "src/shared/composables/useConfig";
 
 
 const {toggle} = useDrawer()
+const {offline} = useConfig()
 const {products, uploadOrder} = useOrder();
 const $q = useQuasar();
 
@@ -61,6 +63,12 @@ function toggleLeftDrawer() {
 }
 
 async function sendOrder() {
+
+  if (!window.navigator.onLine || offline.value) {
+    $q.notify({message: "Está trabajando sin conexion o no tiene datos, por favor guarde el pedido", color: 'negative'});
+    return
+  }
+
   const result = await uploadOrder();
 
   switch (result) {

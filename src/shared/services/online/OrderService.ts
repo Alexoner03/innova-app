@@ -4,7 +4,7 @@ import {BACKEND_URL} from "src/shared/constants";
 
 const OrderService = {
   async sendOrder(order: Order): Promise<boolean> {
-    const response = await axios.post(`${BACKEND_URL}/api/venta/adelanto`,
+    const response = await axios.post(`${BACKEND_URL}/api/venta`,
       {
         comment: order.comment ?? "",
         client: order.client.client_id,
