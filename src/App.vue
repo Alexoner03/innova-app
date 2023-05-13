@@ -11,6 +11,8 @@ const router = useRouter()
 const result = reload()
 
 if(result) {
-  router.push({name: "pedidos"})
+  router.replace({name: "pedidos"})
+}else {
+  router.replace({name: "login"})
 }
 </script>
