@@ -1,5 +1,6 @@
 import axios from "axios";
 import {BACKEND_URL} from "src/shared/constants";
+import {IAdvacementTemp} from "src/shared/composables/useDebt";
 
 export interface IDebt {
   cliente: string,
@@ -58,6 +59,23 @@ const DebtService = {
       return response.data;
     }catch (e) {
       return null
+    }
+  },
+
+  async sendAdvacement(advacements: IAdvacementTemp[]) {
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/venta/adelanto`,
+        {
+          adelantos : advacements
+        }, {
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+          }
+        })
+
+      return response.status === 200;
+    }catch (e) {
+      return false
     }
   }
 }

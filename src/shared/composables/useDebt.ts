@@ -40,6 +40,19 @@ export const useDebt = () => {
 
     removeAdvacement(advacement: IAdvacementTemp) {
       tempAdvacementes.value = tempAdvacementes.value.filter(item => item.serie === advacement.serie);
+    },
+
+    async sendAdvacements() {
+      const result = await DebtService.sendAdvacement(tempAdvacementes.value);
+
+      if(!result) {
+        return "ERROR GUARDANDO ADELANTOS"
+      }
+
+      debts.value = [];
+      tempAdvacementes.value = [];
+      return "ADELANTOS GUARDADOS"
+
     }
   }
 }

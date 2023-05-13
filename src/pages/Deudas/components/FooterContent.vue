@@ -4,7 +4,7 @@
       Total: <span class="text-black text-weight-bold" style="font-size: 20px">S/. {{tempAdvacementes.reduce((prev, curr) => prev + curr.acuenta,0).toFixed(2)}}</span>
     </div>
     <div>
-      <q-btn color="primary">
+      <q-btn color="primary" @click="send">
         Enviar
       </q-btn>
     </div>
@@ -13,8 +13,18 @@
 
 <script setup>
 import {useDebt} from "src/shared/composables/useDebt";
+import {useQuasar} from "quasar";
 
-const {tempAdvacementes} = useDebt()
+const {tempAdvacementes, sendAdvacements} = useDebt()
+const $q = useQuasar()
+
+async function send()
+{
+  $q.loading.show({message: "enviando adelantos"})
+  const result = await sendAdvacements();
+  $q.notify({message: result})
+  $q.loading.hide();
+}
 
 </script>
 
