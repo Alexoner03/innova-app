@@ -1,5 +1,5 @@
 import {IClient} from "src/shared/composables/useClient";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {BACKEND_URL} from "src/shared/constants";
 
 interface RawClient {
@@ -21,13 +21,13 @@ const ClientService = {
   async filterClients(type: "name" | "ruc", value: string) {
 
     try {
-      const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente/filter?type=${type}&value=${value.toLowerCase()}`,{
+      const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente/filter?type=${type}&value=${value.toLowerCase()}`, {
         headers: {
-          "Authorization" :"Bearer "+ localStorage.getItem("token")
+          "Authorization": "Bearer " + localStorage.getItem("token")
         }
       })
 
-      if(response.status !== 200) {
+      if (response.status !== 200) {
         return null
       }
 
@@ -39,21 +39,20 @@ const ClientService = {
           ruc: item.ruc
         }
       })
-    }
-    catch (e) {
+    } catch (e) {
       return null
     }
   },
 
   async listAll() {
     try {
-      const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente`,{
+      const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente`, {
         headers: {
-          "Authorization" :"Bearer "+ localStorage.getItem("token")
+          "Authorization": "Bearer " + localStorage.getItem("token")
         }
       })
 
-      if(response.status !== 200) {
+      if (response.status !== 200) {
         return null
       }
 
@@ -65,30 +64,34 @@ const ClientService = {
           ruc: item.ruc
         }
       })
-    }catch (e) {
+    } catch (e) {
       return null
     }
   },
 
   async saveClient(dto: SaveClientDTO) {
     try {
-      const response = await axios.post<{result: boolean, message: string, client: number}>(`${BACKEND_URL}/api/cliente`,{
+
+      const response = await axios.post<{ result: boolean, message: string, client: number }>(`${BACKEND_URL}/api/cliente`, {
+        ...dto
+      }, {
         headers: {
-          "Authorization" :"Bearer "+ localStorage.getItem("token")
+          "Authorization": "Bearer " + localStorage.getItem("token")
         }
       })
 
-      if(response.status !== 200) {
+      if (response.status !== 200) {
         return response.data
       }
 
       return response.data
 
-    }catch (e) {
+    } catch (e) {
 
+      const error = e as AxiosError<{ result: boolean, message: string, client: number }>
       return {
         result: false,
-        message: "Error desconocido",
+        message: error.response?.data?.message ?? "Error desconocido",
         client: 0
       }
 

@@ -91,12 +91,14 @@ const onSubmit = async () => {
   })
 
   if(!response.result) {
-    $q.notify({message: "Error guardando usuario", color: "negative"})
+    $q.notify({message: response.message, color: "negative"})
+    $q.loading.hide()
     return
   }
 
-  $q.notify({message: "Usuario guardado de manera remota y local", color: "green"})
+  $q.notify({message: response.message, color: "green"})
   $q.loading.hide()
+  onReset()
 }
 
 const onReset = () => {
