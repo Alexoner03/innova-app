@@ -43,7 +43,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: "",
         component: VendedorIndex,
-        name: "clientes"
+        name: "vendedores"
       }
     ]
   },

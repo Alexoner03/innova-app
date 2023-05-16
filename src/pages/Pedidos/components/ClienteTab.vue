@@ -119,7 +119,7 @@ const options = ref<IClient[]>([])
 
 function filterName(val: any, update: any, abort: any) {
 
-  if (val.length < 3) {
+  if (val.length < 2) {
     abort()
     return
   }

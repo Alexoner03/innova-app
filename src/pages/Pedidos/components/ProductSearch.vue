@@ -87,7 +87,7 @@ const productsList = ref<IProduct[]>([])
 
 function searchProduct(value: string) {
 
-  if(value.length <=3) {
+  if(value.length < 2) {
     return
   }
 

@@ -9,7 +9,7 @@
       <q-list>
 
         <template v-for="(menuItem, index) in Menu" :key="index">
-          <q-item :to="menuItem.url" clickable exact v-ripple>
+          <q-item @click="go(menuItem.url)" clickable exact v-ripple>
             <q-item-section avatar>
               <q-icon :name="menuItem.icon" />
             </q-item-section>
@@ -48,9 +48,14 @@ import {useRouter} from "vue-router";
 import {useDrawer} from "src/shared/composables/useDrawer";
 import {useAuth} from "src/shared/composables/useAuth";
 
-const {open} = useDrawer();
+const {open, toggle} = useDrawer();
 const router = useRouter();
 const {closeSession, user} = useAuth()
+
+const go = (link: string) => {
+  router.replace(link)
+  toggle()
+}
 
 const Menu = [
   {

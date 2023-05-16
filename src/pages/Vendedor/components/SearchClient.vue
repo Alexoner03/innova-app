@@ -33,7 +33,7 @@ const search = ref("")
 const $q = useQuasar()
 
 async function searchDebt(value: string) {
-  if (value.length <= 3) {
+  if (value.length < 2) {
     return
   }
 

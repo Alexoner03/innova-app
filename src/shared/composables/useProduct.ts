@@ -28,6 +28,7 @@ export const useProduct= () => {
         if(result !== null) {
           products.value = result;
         }
+        return
       }
 
       const result = await ProductServiceOffline.filterProducts(value)
