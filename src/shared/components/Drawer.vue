@@ -56,7 +56,7 @@ const Menu = [
   {
     title: 'Pedidos',
     url: '/pedidos',
-    icon: 'sell',
+    icon: 'shopping_cart',
     link: 'https://quasar.dev'
   },
   {
@@ -69,6 +69,12 @@ const Menu = [
     title: 'Datos cliente',
     url: '/clientes',
     icon: 'people',
+    link: 'https://quasar.dev'
+  },
+  {
+    title: 'Reportes',
+    url: '/vendedores',
+    icon: 'bar_chart',
     link: 'https://quasar.dev'
   },
 ];
