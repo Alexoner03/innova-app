@@ -9,6 +9,14 @@ interface RawClient {
   ruc: string
 }
 
+export interface SaveClientDTO {
+  ruc: string,
+  cliente: string,
+  direccion: string,
+  telefono: string,
+  representante: string,
+}
+
 const ClientService = {
   async filterClients(type: "name" | "ruc", value: string) {
 
@@ -59,6 +67,31 @@ const ClientService = {
       })
     }catch (e) {
       return null
+    }
+  },
+
+  async saveClient(dto: SaveClientDTO) {
+    try {
+      const response = await axios.post<{result: boolean, message: string, client: number}>(`${BACKEND_URL}/api/cliente`,{
+        headers: {
+          "Authorization" :"Bearer "+ localStorage.getItem("token")
+        }
+      })
+
+      if(response.status !== 200) {
+        return response.data
+      }
+
+      return response.data
+
+    }catch (e) {
+
+      return {
+        result: false,
+        message: "Error desconocido",
+        client: 0
+      }
+
     }
   }
 }

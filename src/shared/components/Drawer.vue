@@ -65,6 +65,12 @@ const Menu = [
     icon: 'payments',
     link: 'https://quasar.dev'
   },
+  {
+    title: 'Datos cliente',
+    url: '/clientes',
+    icon: 'people',
+    link: 'https://quasar.dev'
+  },
 ];
 
 

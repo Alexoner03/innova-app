@@ -2,11 +2,12 @@ import {RouteRecordRaw} from 'vue-router';
 
 import PedidosIndex from '../pages/Pedidos/Index.vue'
 import DeudasIndex from '../pages/Deudas/Index.vue'
+import ClientesIndex from '../pages/Clientes/Index.vue'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('pages/Login/IndexPage.vue'),
+    component: () => import('pages/Login/Index.vue'),
     name: "login"
   },
 
@@ -20,6 +21,18 @@ const routes: RouteRecordRaw[] = [
         name: "pedidos"
       }
     ],
+  },
+
+  {
+    path: '/clientes',
+    component: () => import('pages/Clientes/layouts/Layout.vue'),
+    children: [
+      {
+        path: "",
+        component: ClientesIndex,
+        name: "clientes"
+      }
+    ]
   },
 
   {

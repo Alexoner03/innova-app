@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import ClientService from "src/shared/services/online/ClientService";
+import ClientService, {SaveClientDTO} from "src/shared/services/online/ClientService";
 import ClientServiceOffline from "src/shared/services/offline/ClientServiceOffline";
 import {useConfig} from "src/shared/composables/useConfig";
 
@@ -43,6 +43,25 @@ export const useClient = () => {
 
       return await ClientServiceOffline.saveClients(result)
 
+
+    },
+
+    async saveClient(dto: SaveClientDTO) {
+
+      const response = await ClientService.saveClient(dto);
+
+      if(!response.result) {
+        return response
+      }
+
+      await ClientServiceOffline.saveClient({
+        client_id: response.client,
+        name: dto.cliente,
+        address: dto.direccion,
+        ruc: dto.ruc
+      })
+
+      return response
 
     }
   }

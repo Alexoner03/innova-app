@@ -31,6 +31,23 @@ const ClientServiceOffline = {
       console.log(e)
       return false;
     }
+  },
+
+  async saveClient(client: IClient) {
+
+    try {
+      await db.clients.add(
+        {
+          ...client,
+          createdAt: obtenerHoraActual()
+        }
+      )
+
+      return true
+    } catch (e) {
+      console.log(e)
+      return false;
+    }
   }
 }
 
