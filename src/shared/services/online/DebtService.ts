@@ -10,7 +10,8 @@ export interface IDebt {
   total: number,
   pendiente: number,
   acuenta: number,
-  serieventas: string
+  serieventas: string,
+  documento: string
 }
 
 export interface IAdvacement {

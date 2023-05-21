@@ -17,6 +17,9 @@
             <div class="text-blue full-width text-center" @click="loadAdvancements(item)">{{item.acuenta?.toFixed(2) ?? "00.00"}}</div>
           </div>
         </div>
+        <p class="q-mb-none text-bold">
+          TIPO DE DOCUMENTO: {{item.documento}}
+        </p>
       </q-item-section>
     </q-item>
   </q-list>

@@ -32,9 +32,10 @@
       <q-card-section class="scroll" style="max-height: 80vh; padding-top: 60px">
 
         <div class="flex column" style="width: 100%; position: relative" v-for="(product, index) in productsList" :key="index" v-ripple @click="addProductToOrder(product)">
-          <div class="text-center text-bold" style="font-size: 20px">
+          <div class="text-center text-bold q-my-md" style="font-size: 20px">
             {{ product.name }}
           </div>
+<!--
           <template v-if="product.url && product.url !== ''">
             <q-img :src="product.url" height="100px" fit="contain">
               <template v-slot:error>
@@ -44,24 +45,38 @@
               </template>
             </q-img>
           </template>
-          <div class="flex justify-between q-mb-md q-px-md">
-            <div class="flex column text-center">
+-->
+
+          <div class="flex justify-between q-mb-sm q-px-md">
+            <div class="thirdSpace flex column text-center">
+              <div class="text-bold">Prec. Unitario</div>
+              <div class="text-blue text-bold">{{ product.unitPrice.toFixed(2) }}</div>
+            </div>
+            <div class="thirdSpace flex column text-center">
+              <div class="text-bold">Prec. Especial</div>
+              <div class="text-blue text-bold">{{ product.especialPrice.toFixed(2) }}</div>
+            </div>
+            <div class="thirdSpace flex column text-center">
+              <div class="text-bold">Prec. Promotor</div>
+              <div class="text-blue text-bold">{{ product.promotorPrice.toFixed(2) }}</div>
+            </div>
+          </div>
+
+          <div class="flex justify-between q-px-md">
+            <div class="thirdSpace flex column text-center">
               <div class="text-bold">Stock</div>
               <div class="text-red text-bold">{{ product.stock }}</div>
             </div>
-            <div class="flex column text-center">
-              <div class="text-bold">Precio Unit.</div>
-              <div class="text-blue text-bold">{{ product.unitPrice.toFixed(2) }}</div>
-            </div>
-            <div class="flex column text-center">
+            <div class="thirdSpace flex column text-center">
               <div class="text-bold">Cant. Caja</div>
               <div>{{ product.cantByBox }}</div>
             </div>
-            <div class="flex column text-center">
+            <div class="thirdSpace flex column text-center">
               <div class="text-bold">Codigo</div>
               <div>{{ product.codigo }}</div>
             </div>
           </div>
+
           <q-separator></q-separator>
         </div>
       </q-card-section>
@@ -133,5 +148,7 @@ function addProductToOrder(product: IProduct) {
 </script>
 
 <style scoped>
-
+  .thirdSpace {
+    width: 33.333333%;
+  }
 </style>
