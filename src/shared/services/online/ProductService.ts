@@ -4,7 +4,9 @@ import {BACKEND_URL} from "src/shared/constants";
 
 interface RawProduct {
   producto: string
-  p_especial: number
+  p_especial: number,
+  p_promotor: number,
+  p_unidad: number,
   stock_real: number
   id: number
   cant_caja: number
@@ -32,7 +34,9 @@ const ProductService = {
           cantByBox: item.cant_caja,
           stock: item.stock_real,
           url: "",
-          unitPrice: item.p_especial
+          unitPrice: item.p_unidad,
+          promotorPrice: item.p_promotor,
+          especialPrice: item.p_especial
         }
       })
     }catch (e) {
@@ -61,7 +65,9 @@ const ProductService = {
           cantByBox: item.cant_caja,
           stock: item.stock_real,
           url: "",
-          unitPrice: item.p_especial
+          unitPrice: item.p_unidad,
+          promotorPrice: item.p_promotor,
+          especialPrice: item.p_especial
         }
       })
     }catch (e) {

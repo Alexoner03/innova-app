@@ -19,8 +19,10 @@
             class="q-mr-sm"
           >
           </q-input>
-          <q-input v-model="product.unitPrice" type="number" outlined class="q-mr-sm"
-                   style="font-size: 20px; width: 33.33333%"></q-input>
+          <q-input v-model="product.unitPrice" outlined class="q-mr-sm"
+                   style="font-size: 20px; width: 33.33333%"
+          >
+          </q-input>
           <q-field outlined style="font-size: 20px; width: 33.33333%">
             <template v-slot:control>
               <div class="self-center full-width no-outline" tabindex="0">
@@ -36,7 +38,6 @@
 </template>
 
 <script setup lang="ts">
-
 import {useOrder} from "src/shared/composables/useOrder";
 import {IProduct} from "src/shared/composables/useProduct";
 import {useQuasar} from "quasar";
@@ -51,8 +52,6 @@ const onDelete = (product: IProduct) => {
     message: "Producto removido de la orden"
   })
 }
-
-
 </script>
 
 <style scoped>

@@ -91,10 +91,10 @@ export const useOrder = () => {
         return STATES.TOTAL_MIN_ERROR
       }
 
-      const sameExcced = products.value.some(item => item.cant > item.stock)
+/*      const sameExcced = products.value.some(item => item.cant > item.stock)
       if(sameExcced) {
         return STATES.EXCEED_ERROR
-      }
+      }*/
 
       try {
         await OrderServiceOffline.save({
@@ -127,10 +127,10 @@ export const useOrder = () => {
         return STATES.TOTAL_MIN_ERROR
       }
 
-      const sameExcced = products.value.some(item => item.cant > item.stock)
+/*      const sameExcced = products.value.some(item => item.cant > item.stock)
       if(sameExcced) {
         return STATES.EXCEED_ERROR
-      }
+      }*/
 
       try {
 
@@ -182,7 +182,9 @@ export const useOrder = () => {
           url: item.url,
           unitPrice: item.unitPrice,
           cantByBox: item.cantByBox,
-          codigo: item.codigo
+          codigo: item.codigo,
+          especialPrice: item.especialPrice,
+          promotorPrice: item.promotorPrice
         }
       })
 

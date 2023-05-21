@@ -20,16 +20,16 @@ export class LocalDB extends Dexie {
   constructor() {
     super("innova");
 
-    this.version(1).stores({
+    this.version(2).stores({
       orders: '++id, *client, comment, *products, createdAt',
     });
 
-    this.version(1).stores({
+    this.version(2).stores({
       clients: '++id, client_id, name, ruc, address, createdAt'
     })
 
-    this.version(1).stores({
-      products: '++id, product_id, name, stock, unitPrice, cantByBox, codigo, url'
+    this.version(2).stores({
+      products: '++id, product_id, name, stock, unitPrice, promotorPrice, especialPrice, cantByBox, codigo, url'
     })
   }
 }

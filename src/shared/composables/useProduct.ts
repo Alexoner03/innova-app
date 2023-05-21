@@ -8,6 +8,8 @@ export interface IProduct {
   name: string,
   stock: number,
   unitPrice: number,
+  promotorPrice: number,
+  especialPrice: number,
   cantByBox: number,
   codigo: string,
   url: string
@@ -34,7 +36,7 @@ export const useProduct= () => {
       const result = await ProductServiceOffline.filterProducts(value)
 
       if(result !== null) {
-        products.value = result;
+        products.value = result
       }
     },
 

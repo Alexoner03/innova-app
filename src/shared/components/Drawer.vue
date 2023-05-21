@@ -9,7 +9,7 @@
       <q-list>
 
         <template v-for="(menuItem, index) in Menu" :key="index">
-          <q-item @click="go(menuItem.url)" clickable exact v-ripple>
+          <q-item @click="go(menuItem.url)" clickable exact v-ripple :active="router.currentRoute.value.fullPath.includes(menuItem.url)">
             <q-item-section avatar>
               <q-icon :name="menuItem.icon" />
             </q-item-section>

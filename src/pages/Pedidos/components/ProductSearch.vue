@@ -51,7 +51,7 @@
             </div>
             <div class="flex column text-center">
               <div class="text-bold">Precio Unit.</div>
-              <div class="text-blue text-bold">{{ product.unitPrice }}</div>
+              <div class="text-blue text-bold">{{ product.unitPrice.toFixed(2) }}</div>
             </div>
             <div class="flex column text-center">
               <div class="text-bold">Cant. Caja</div>

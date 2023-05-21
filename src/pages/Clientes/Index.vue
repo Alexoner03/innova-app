@@ -10,7 +10,7 @@
         v-model="ruc"
         label="Ruc *"
         hint="Escriba su ruc"
-        class="q-mb-md"
+        class="q-mb-md upper"
         lazy-rules
         :rules="[ val => val && val.length === 11 && !isNaN(val) || 'Debe ingresar un numero de 11 digitos']"
       />
@@ -20,7 +20,7 @@
         v-model="cliente"
         label="Cliente *"
         hint="Escriba su Razon social"
-        class="q-mb-md"
+        class="q-mb-md upper"
         lazy-rules
         :rules="[ val => val && val.length > 6 || 'Debe ingresar su razón social, minimo 6 carácteres']"
       />
@@ -30,7 +30,7 @@
         v-model="direccion"
         label="Dirección *"
         hint="Escriba su dirección"
-        class="q-mb-md"
+        class="q-mb-md upper"
         lazy-rules
         :rules="[ val => val && val.length > 6 || 'Debe ingresar su dirección, minimo 6 carácteres']"
       />
@@ -40,7 +40,7 @@
         v-model="telefono"
         label="Telefono *"
         hint="Escriba su telefono"
-        class="q-mb-md"
+        class="q-mb-md upper"
         lazy-rules
         :rules="[ val => val && val.length === 9 && !isNaN(val) && val[0] === '9' || 'Debe ingresar un numero como 9XXXXXXXX']"
       />
@@ -50,7 +50,7 @@
         v-model="representante"
         label="Nombre de tienda *"
         hint="Escriba el nombre de su representante"
-        class="q-mb-xl"
+        class="q-mb-xl upper"
         lazy-rules
         :rules="[ val => val && val.length > 3 || 'Debe ingresar un nombre minimo 3 caracteres']"
       />

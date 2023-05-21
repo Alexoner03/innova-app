@@ -18,7 +18,7 @@ const ClientServiceOffline = {
 
   async saveClients(clients: IClient[]) {
     try {
-      await db.clients.clear()
+      await this.clearTable();
       await db.clients.bulkAdd(clients.map(item => {
         return {
           ...item,
@@ -34,7 +34,6 @@ const ClientServiceOffline = {
   },
 
   async saveClient(client: IClient) {
-
     try {
       await db.clients.add(
         {
@@ -47,6 +46,15 @@ const ClientServiceOffline = {
     } catch (e) {
       console.log(e)
       return false;
+    }
+  },
+
+
+  async clearTable () {
+    try{
+      await db.clients.clear()
+    }catch (e) {
+
     }
   }
 }
