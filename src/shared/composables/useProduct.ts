@@ -10,6 +10,7 @@ export interface IProduct {
   unitPrice: number,
   promotorPrice: number,
   especialPrice: number,
+  unitarioPrice: number,
   cantByBox: number,
   codigo: string,
   url: string

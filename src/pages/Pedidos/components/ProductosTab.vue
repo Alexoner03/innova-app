@@ -2,6 +2,28 @@
   <div style="width: 100%; height:calc(100vh - 190px)" class="scroll">
     <div v-for="(product, index) in products" :key="index">
       <p class="text-bold text-center" style="font-size: 20px">{{ product.name }}</p>
+      <div class="flex justify-between no-wrap">
+
+        <q-btn
+          color="primary"
+          size="sm"
+          :label="`Especial: ${product.especialPrice.toFixed(2)}`"
+          @click="product.unitPrice = product.especialPrice"
+        />
+        <q-btn
+          color="primary"
+          size="sm"
+          :label="`Promotor: ${product.promotorPrice.toFixed(2)}`"
+          @click="product.unitPrice = product.promotorPrice"
+        />
+        <q-btn
+          color="primary"
+          size="sm"
+          :label="`Unitario: ${product.unitarioPrice.toFixed(2)}`"
+          @click="product.unitPrice = product.unitarioPrice"
+        />
+
+      </div>
       <div class="flex justify-between items-center no-wrap q-my-md">
         <div class="flex justify-between items-center no-wrap q-mr-lg">
           <q-btn class="q-mr-md" icon="close" color="negative" round dense @click="onDelete(product)"></q-btn>
@@ -51,6 +73,10 @@ const onDelete = (product: IProduct) => {
     color: 'green',
     message: "Producto removido de la orden"
   })
+}
+
+const consolelog = () => {
+  console.log("ok")
 }
 </script>
 

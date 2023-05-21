@@ -36,7 +36,8 @@ const ProductService = {
           url: "",
           unitPrice: item.p_unidad,
           promotorPrice: item.p_promotor,
-          especialPrice: item.p_especial
+          especialPrice: item.p_especial,
+          unitarioPrice: item.p_unidad
         }
       })
     }catch (e) {
@@ -67,7 +68,8 @@ const ProductService = {
           url: "",
           unitPrice: item.p_unidad,
           promotorPrice: item.p_promotor,
-          especialPrice: item.p_especial
+          especialPrice: item.p_especial,
+          unitarioPrice: item.p_unidad
         }
       })
     }catch (e) {
