@@ -93,6 +93,10 @@ const DebtService = {
     }catch (e) {
       return [];
     }
+  },
+
+  getDownloadPDFURL() {
+    return `${BACKEND_URL}/api/venta/reporte-deuda?token=${localStorage.getItem("token")}`
   }
 }
 

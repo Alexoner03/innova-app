@@ -6,6 +6,7 @@ export interface IAdvacementTemp {
   acuenta: number,
   cliente: string,
   serie: string,
+  documento: string
 }
 
 export interface IDetail {
