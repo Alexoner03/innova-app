@@ -6,7 +6,7 @@
         <div class="flex full-width justify-between items-center">
           <div style="width: 33.333%" class="flex column justify-center items-center">
             <div class="text-bold">{{item.fecha}}</div>
-            <div class="text-blue">{{item.total.toFixed(2)}}</div>
+            <div class="text-blue" @click="showDetails(item)">{{item.total.toFixed(2)}}</div>
           </div>
           <div style="width: 33.333%" class="flex column justify-center items-center">
             <div class="text-bold">{{item.serieventas}}</div>
@@ -23,6 +23,7 @@
       </q-item-section>
     </q-item>
   </q-list>
+
   <q-dialog v-model="prompt" persistent>
     <q-card style="min-width: 350px">
       <q-card-section>
@@ -70,22 +71,78 @@
     </q-card>
   </q-dialog>
 
+  <q-dialog v-model="detailModal">
+    <q-card>
+      <q-card-section>
+        <div class="text-bold">Detalles del pedido: {{selectedDetail?.serieventas}}</div>
+        <div class="text-bold">Cliente: {{selectedDetail?.cliente}}</div>
+      </q-card-section>
+
+      <q-separator />
+
+      <q-card-section style="max-height: 50vh; width: 80vw; max-width: 80vw" class="scroll q-pa-none">
+        <q-list separator bordered>
+          <q-item v-for="item in detailsProds" dense>
+            <div class="flex column full-width">
+              <div :class="['text-center text-bold', item.estado === 'devolucion' ? 'text-negative' : 'text-primary']">
+                {{ item.estado === 'devolucion' ? 'DEVOLUCIÓN' : '' }}
+                <br>
+                {{item.producto}}
+              </div>
+              <div class="flex justify-between">
+                <div style="width: 33.33%; height: 16px" class="text-center text-bold">
+                  CANTIDAD
+                </div>
+                <div style="width: 33.33%; height: 16px" class="text-center text-bold">
+                  P. UNITARIO
+                </div>
+                <div style="width: 33.33%; height: 16px" class="text-center text-bold">
+                  TOTAL
+                </div>
+              </div>
+              <div class="flex justify-between">
+                <div style="width: 33.33%; height: 20px" class="text-center">
+                    {{item.cantidad}}
+                </div>
+                <div style="width: 33.33%; height: 20px" class="text-center">
+                    S/. {{item.unitario.toFixed(2)}}
+                </div>
+                <div style="width: 33.33%; height: 20px" class="text-center">
+                    S/. {{item.importe.toFixed(2)}}
+                </div>
+              </div>
+            </div>
+          </q-item>
+        </q-list>
+      </q-card-section>
+
+      <q-separator />
+
+      <q-card-actions align="right">
+        <q-btn flat label="cerrar" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
 </template>
 
 <script setup lang="ts">
-import {useDebt} from "src/shared/composables/useDebt";
+import {IDetail, useDebt} from "src/shared/composables/useDebt";
 import {ref} from "vue";
 import {useQuasar} from "quasar";
 import debtService, {IAdvacement, IDebt} from "src/shared/services/online/DebtService";
 
-const {debts, addAdvacement, listDebts} = useDebt()
+const {debts, addAdvacement, listDebts, listDetail} = useDebt()
 const $q = useQuasar()
 const isLoading = ref(false)
 const prompt = ref(false)
 const fixed = ref(false)
+const detailModal = ref(false)
 const advancement = ref("")
 const selectedItem = ref<IDebt | null>(null);
 const listAdvacements = ref<IAdvacement[]>([])
+const detailsProds = ref<IDetail[]>([])
+const selectedDetail = ref<IDebt | null>(null)
 
 const load = async () => {
 
@@ -167,6 +224,14 @@ const confirmAddAdvacement = () => {
   advancement.value = "";
   $q.notify({message: "Adelanto guardado"})
   prompt.value = false;
+}
+
+const showDetails = async (serie: IDebt) => {
+  $q.loading.show({message: "Cargando detalles de la serie: " + serie.serieventas})
+  detailsProds.value = await listDetail(serie.serieventas);
+  detailModal.value = true;
+  selectedDetail.value = serie
+  $q.loading.hide()
 }
 
 load()

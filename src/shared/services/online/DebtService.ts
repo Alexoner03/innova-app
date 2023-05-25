@@ -1,6 +1,6 @@
 import axios from "axios";
 import {BACKEND_URL} from "src/shared/constants";
-import {IAdvacementTemp} from "src/shared/composables/useDebt";
+import {IAdvacementTemp, IDetail} from "src/shared/composables/useDebt";
 
 export interface IDebt {
   cliente: string,
@@ -77,6 +77,21 @@ const DebtService = {
       return response.status === 200;
     }catch (e) {
       return false
+    }
+  },
+
+  async listDetails(serie: string): Promise<IDetail[]> {
+    try {
+      const response = await axios.get<IDetail[]>(`${BACKEND_URL}/api/venta/detalle`, {
+          params: { serie },
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+          }
+        })
+
+      return response.data
+    }catch (e) {
+      return [];
     }
   }
 }

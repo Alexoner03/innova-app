@@ -8,6 +8,15 @@ export interface IAdvacementTemp {
   serie: string,
 }
 
+export interface IDetail {
+  cantidad: number;
+  producto: string;
+  unitario: number;
+  importe:  number;
+  id:       number;
+  estado:   string;
+}
+
 const debts = ref<IDebt[]>([])
 const tempAdvacementes = ref<IAdvacementTemp[]>([])
 
@@ -53,6 +62,10 @@ export const useDebt = () => {
       tempAdvacementes.value = [];
       return "ADELANTOS GUARDADOS"
 
+    },
+
+    listDetail(serie: string) {
+      return DebtService.listDetails(serie)
     }
   }
 }
