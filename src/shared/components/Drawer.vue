@@ -47,10 +47,21 @@
 import {useRouter} from "vue-router";
 import {useDrawer} from "src/shared/composables/useDrawer";
 import {useAuth} from "src/shared/composables/useAuth";
+import {useOrder} from "src/shared/composables/useOrder";
+import {useConfig} from "src/shared/composables/useConfig";
+import {db} from "src/shared/db";
+import {useDebt} from "src/shared/composables/useDebt";
+import {useProduct} from "src/shared/composables/useProduct";
+import {useClient} from "src/shared/composables/useClient";
 
 const {open, toggle} = useDrawer();
 const router = useRouter();
 const {closeSession, user} = useAuth()
+const { reset } = useOrder()
+const { offline } = useConfig()
+const {tempAdvacementes, debts} = useDebt()
+const { products } = useProduct()
+const { clients } = useClient()
 
 const go = (link: string) => {
   router.replace(link)
@@ -87,7 +98,15 @@ const Menu = [
 
 const logout = () => {
   closeSession()
-  router.push({name: "login"})
+  open.value = false;
+  reset()
+  offline.value = false;
+  db.delete()
+  tempAdvacementes.value = []
+  debts.value = []
+  products.value = []
+  clients.value = []
+  router.push({name: "login"}).then(() => location.reload())
 }
 
 </script>

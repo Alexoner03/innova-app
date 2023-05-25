@@ -184,7 +184,8 @@ export const useOrder = () => {
           cantByBox: item.cantByBox,
           codigo: item.codigo,
           especialPrice: item.especialPrice,
-          promotorPrice: item.promotorPrice
+          promotorPrice: item.promotorPrice,
+          unitarioPrice: item.unitarioPrice
         }
       })
 

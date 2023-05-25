@@ -33,6 +33,44 @@
       </template>
     </q-input>
 
+    <q-select
+      filled
+      bg-color="white"
+      v-model="db"
+      options-dense
+      label="BASE"
+      :options='[
+        { value: "innovaprincipal", label : "Principal"},
+        { value: "castilla", label : "Castilla"},
+        { value: "castilla2", label : "Castilla Nuevo"},
+        { value: "jauja", label : "Jauja"},
+        { value: "almacenayacucho", label : "Ferreboom Ayacucho"},
+        { value: "ferreboomlima", label : "Ferreboom Lima"},
+        { value: "tingomaria", label : "Tingo Maria"},
+        { value: "chupaca", label : "Chupaca"},
+        { value: "pichari", label : "Pichari"},
+        { value: "recuerdostingomaria", label : "Recuerdos"},
+        { value: "vanidositos", label : "Vanidositos"},
+        { value: "vanidositosbebom", label : "Vanidositos nuevo ruc"},
+        { value: "aquady", label : "Aquady"},
+        { value: "ferreboompichanaki", label : "Ferreboom Pichanaqui"},
+        { value: "showroom", label : "Show Room"},
+        { value: "pichanaki", label : "Full Tools"},
+        { value: "jhonsullca", label : "Jhon Sullca"},
+        { value: "clienteferreboom01", label : "Huamali Junin"},
+        { value: "clientepichari01", label : "Elkin Quispe"},
+        { value: "clientepichari02", label : "Huaman Bermudo"},
+        { value: "clientepichari03", label : "Grupo Canayre"},
+        { value: "clientepichari04", label : "Danielita"},
+        { value: "clientepichari05", label : "Inversiones Sonpra"},
+        { value: "innovaprincipal_bkp", label : "Prueba"}
+      ]'
+      :option-value="item => item.value"
+      :option-label="item => item.label"
+      emit-value
+      map-options
+    />
+
     <div class="flex justify-center">
       <q-btn label="Iniciar sesión" type="submit" color="orange-10" :loading="submitting"
       >
@@ -56,12 +94,14 @@ const auth = useAuth()
 
 const user = ref(null)
 const password = ref(null)
+const dbval = import.meta.env.MODE === "development" ? "innovaprincipal_bkp" : "innovaprincipal"
+const db = ref(dbval)
 const isPwd = ref(true)
 const submitting = ref(false)
 
 async function onSubmit() {
   submitting.value = true;
-  const result = await auth.login(user.value!, password.value!)
+  const result = await auth.login(user.value!, password.value!, db.value)
 
   if (result === null) {
     $q.notify({

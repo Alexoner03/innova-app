@@ -6,8 +6,8 @@ const user = ref<IUser | null>(null);
 export const useAuth = () => {
   return  {
     user,
-    async login(_user:string, password: string) {
-      const result = await AuthService.login({user: _user, password})
+    async login(_user:string, password: string, db: string) {
+      const result = await AuthService.login({user: _user, password, db})
 
       if(result !== null) {
           user.value = result.user
@@ -20,6 +20,7 @@ export const useAuth = () => {
 
     closeSession() {
       localStorage.removeItem("token")
+      localStorage.removeItem("user")
       user.value = null
     },
 

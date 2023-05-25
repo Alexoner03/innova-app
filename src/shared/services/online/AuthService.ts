@@ -18,12 +18,13 @@ export interface Token {
 }
 
 const AuthService = {
-  async login(creds: {user: string, password: string}){
+  async login(creds: {user: string, password: string, db: string}){
 
     try {
       const response = await axios.post<{auth: Token, user: IUser}>(`${BACKEND_URL}/api/auth/login`, {
         usuario: creds.user,
-        password: creds.password
+        password: creds.password,
+        db: creds.db
       })
 
       if(response.status !== 200) {
