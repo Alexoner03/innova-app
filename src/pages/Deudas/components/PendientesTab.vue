@@ -28,10 +28,10 @@
     <q-card style="min-width: 85vw">
       <q-card-section>
         <div style="font-size: 16px" class="text-bold">Agregar adelanto</div>
-        <div style="font-size: 16px">Cliente: {{selectedItem.cliente}}</div>
-        <div style="font-size: 14px">Tipo DOC.: {{selectedItem.documento}}</div>
-        <div>Total: {{selectedItem.total}}</div>
-        <div>Pendiente: {{selectedItem.pendiente}}</div>
+        <div style="font-size: 16px">Cliente: {{selectedItem?.cliente}}</div>
+        <div style="font-size: 14px">Tipo DOC.: {{selectedItem?.documento}}</div>
+        <div>Total: {{selectedItem?.total}}</div>
+        <div>Pendiente: {{selectedItem?.pendiente}}</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
@@ -77,6 +77,7 @@
       <q-card-section>
         <div class="text-bold">Detalles del pedido: {{selectedDetail?.serieventas}}</div>
         <div class="text-bold">Cliente: {{selectedDetail?.cliente}}</div>
+        <div class="text-bold">Tipo Doc.: {{selectedDetail?.documento}}</div>
       </q-card-section>
 
       <q-separator />
