@@ -21,7 +21,7 @@
 
     <Drawer></Drawer>
 
-    <q-page-container>
+    <q-page-container :key="counter">
       <router-view></router-view>
     </q-page-container>
 
@@ -44,7 +44,7 @@ import Drawer from "src/shared/components/Drawer.vue";
 import OptionButton from "pages/Pedidos/components/OptionButton.vue";
 import ProductSearch from "pages/Pedidos/components/ProductSearch.vue";
 import {STATES, useOrder} from "src/shared/composables/useOrder";
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import {useQuasar} from "quasar";
 import {useConfig} from "src/shared/composables/useConfig";
 
@@ -52,6 +52,7 @@ import {useConfig} from "src/shared/composables/useConfig";
 const {toggle} = useDrawer()
 const {offline} = useConfig()
 const {products, uploadOrder} = useOrder();
+const counter = ref(0)
 const $q = useQuasar();
 
 const totalOrder = computed(() => {
@@ -68,6 +69,10 @@ async function sendOrder() {
     $q.notify({message: "Está trabajando sin conexion o no tiene datos, por favor guarde el pedido", color: 'negative'});
     return
   }
+
+  $q.loading.show({
+    message: "Enviando Pedido"
+  })
 
   const result = await uploadOrder();
 
@@ -91,6 +96,9 @@ async function sendOrder() {
       $q.notify({message: "Seleccione un producto", color: 'red'});
       break;
   }
+
+  $q.loading.hide();
+  counter.value++
 }
 
 </script>

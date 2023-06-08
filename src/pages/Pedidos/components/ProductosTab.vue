@@ -3,18 +3,17 @@
     <div v-for="(product, index) in products" :key="index">
       <p class="text-bold text-center" style="font-size: 20px">{{ product.name }}</p>
       <div class="flex justify-between no-wrap">
-
-        <q-btn
-          color="primary"
-          size="sm"
-          :label="`Especial: ${product.especialPrice.toFixed(2)}`"
-          @click="product.unitPrice = product.especialPrice"
-        />
         <q-btn
           color="primary"
           size="sm"
           :label="`Promotor: ${product.promotorPrice.toFixed(2)}`"
           @click="product.unitPrice = product.promotorPrice"
+        />
+        <q-btn
+          color="primary"
+          size="sm"
+          :label="`Especial: ${product.especialPrice.toFixed(2)}`"
+          @click="product.unitPrice = product.especialPrice"
         />
         <q-btn
           color="primary"

@@ -4,6 +4,7 @@
       v-model="search"
       debounce="1000"
       filled
+      clearable
       bg-color="white"
       dense
       placeholder="Buscar Producto"
@@ -32,22 +33,10 @@
       <q-card-section class="scroll" style="max-height: 80vh; padding-top: 60px">
 
         <div class="flex column" style="width: 100%; position: relative" v-for="(product, index) in productsList" :key="index" v-ripple @click="addProductToOrder(product)">
-          <div class="text-center text-bold q-my-md" style="font-size: 20px">
+          <div class="text-center text-bold q-my-sm" style="font-size: 14px">
             {{ product.name }}
           </div>
-<!--
-          <template v-if="product.url && product.url !== ''">
-            <q-img :src="product.url" height="100px" fit="contain">
-              <template v-slot:error>
-                <div class="absolute-full flex flex-center items-center bg-gray text-white">
-                  Sin imagen
-                </div>
-              </template>
-            </q-img>
-          </template>
--->
-
-          <div class="flex justify-between q-mb-sm q-px-md">
+          <div class="flex justify-between q-mb-xs q-px-md">
             <div class="thirdSpace flex column text-center">
               <div class="text-bold">Prec. Unitario</div>
               <div class="text-blue text-bold">{{ product.unitPrice.toFixed(2) }}</div>
@@ -122,7 +111,6 @@ function searchProduct(value: string) {
 
     productsList.value = products.value;
     fixed.value = true
-    search.value = ""
     $q.loading.hide();
   })
 }
