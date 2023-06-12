@@ -8,7 +8,7 @@
       <q-input
         filled
         v-model="ruc"
-        label="Ruc *"
+        label="RUC"
         hint="Escriba su ruc"
         class="q-mb-md upper"
         lazy-rules
@@ -18,27 +18,51 @@
       <q-input
         filled
         v-model="cliente"
-        label="Cliente *"
+        label="Cliente"
         hint="Escriba su Razon social"
         class="q-mb-md upper"
         lazy-rules
-        :rules="[ val => val && val.length > 6 || 'Debe ingresar su razón social, minimo 6 carácteres']"
+        :rules="[ val => val && val.length > 5 || 'Debe ingresar su razón social, minimo 6 carácteres']"
       />
 
       <q-input
         filled
         v-model="direccion"
-        label="Dirección *"
+        label="Dirección"
         hint="Escriba su dirección"
         class="q-mb-md upper"
         lazy-rules
-        :rules="[ val => val && val.length > 6 || 'Debe ingresar su dirección, minimo 6 carácteres']"
+        :rules="[ val => val && val.length > 5 || 'Debe ingresar su dirección, minimo 6 carácteres']"
       />
 
       <q-input
         filled
+        v-model="nombre_comercial"
+        label="Nombre Comercial"
+        hint="Escriba el nombre comercial"
+        class="q-mb-md upper"
+        lazy-rules
+        :rules="[ val => val && val.length > 5 || 'Debe ingresar su nombre comercial, minimo 6 carácteres']"
+      />
+
+      <q-input
+        filled
+        v-model="zona"
+        label="Zona"
+        hint="Indique la zona"
+        class="q-mb-md upper"
+        lazy-rules
+        :rules="[ val => val && val.length > 2 || 'Debe ingresar la zona, mínimo 3 carácteres']"
+      />
+
+      <!-- TIPO (NECESITO VER OPCIONES TIENE ESE DESPLEGABLE)
+          CORREO
+          CUMPLEAÑOS (PUEDE SER FECHA DE NACIMIENTO Y UN DATE PICKER?) -->
+
+      <q-input
+        filled
         v-model="telefono"
-        label="Telefono *"
+        label="Celular"
         hint="Escriba su telefono"
         class="q-mb-md upper"
         lazy-rules
@@ -47,14 +71,33 @@
 
       <q-input
         filled
+        v-model="correo"
+        label="Correo"
+        hint="Ingrese el correo de la empresa o cliente"
+        class="q-mb-md upper"
+        type="email"
+        lazy-rules
+      />
+
+      <q-input
+        filled
+        v-model="undefined"
+        label="Fecha de Nacimiento"
+        hint="Seleccione la fecha"
+        class="q-mb-md upper"
+        type="date"
+        lazy-rules
+      />
+
+      <q-input
+        filled
         v-model="representante"
-        label="Nombre de tienda *"
+        label="Nombre de representante"
         hint="Escriba el nombre de su representante"
         class="q-mb-xl upper"
         lazy-rules
-        :rules="[ val => val && val.length > 3 || 'Debe ingresar un nombre minimo 3 caracteres']"
+        :rules="[ val => val && val.length > 2 || 'Debe ingresar un nombre minimo 3 caracteres']"
       />
-
 
       <div class="flex justify-end">
         <q-btn label="Limpiar" type="reset" color="primary" flat class="q-mr-md"/>
@@ -77,6 +120,9 @@ const cliente =         ref<string>("")
 const direccion =       ref<string>("")
 const telefono =        ref<string>("")
 const representante =   ref<string>("")
+const nombre_comercial = ref<string>("")
+const zona = ref<string>("")
+const correo = ref<string>("")
 
 
 const onSubmit = async () => {
@@ -88,6 +134,9 @@ const onSubmit = async () => {
     direccion: direccion.value,
     telefono: telefono.value,
     representante: representante.value,
+    nombre_comercial: nombre_comercial.value,
+    zona: zona.value,
+    correo: correo.value
   })
 
   if(!response.result) {

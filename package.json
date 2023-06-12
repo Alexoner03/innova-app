@@ -8,7 +8,8 @@
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
-    "build": "quasar build -m pwa"
+    "build": "quasar build -m pwa",
+    "apk:build": "quasar build -m capacitor -T android --ide"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
