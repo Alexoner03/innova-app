@@ -10,7 +10,8 @@ interface RawProduct {
   stock_real: number
   id: number
   cant_caja: number
-  codigo: string
+  codigo: string,
+  marca: string
 }
 
 const ProductService = {
@@ -37,7 +38,8 @@ const ProductService = {
           unitPrice: item.p_unidad,
           promotorPrice: item.p_promotor,
           especialPrice: item.p_especial,
-          unitarioPrice: item.p_unidad
+          unitarioPrice: item.p_unidad,
+          marca: item.marca
         }
       })
     }catch (e) {
@@ -69,7 +71,8 @@ const ProductService = {
           unitPrice: item.p_unidad,
           promotorPrice: item.p_promotor,
           especialPrice: item.p_especial,
-          unitarioPrice: item.p_unidad
+          unitarioPrice: item.p_unidad,
+          marca: item.marca
         }
       })
     }catch (e) {

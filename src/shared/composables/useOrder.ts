@@ -6,7 +6,7 @@ import OrderServiceOffline from "src/shared/services/offline/OrderServiceOffline
 import {obtenerHoraActual} from "src/shared/utils";
 import OrderService from "src/shared/services/online/OrderService";
 
-export type IProductOrder = IProduct & { cant: number };
+export type IProductOrder = IProduct & { cant: any };
 
 const client = ref<IClient | null>(null)
 const products = ref<IProductOrder[]>([])
@@ -31,6 +31,7 @@ export const enum STATES {
 }
 
 const addProductEvent = ref<number>(0);
+const productTabError = ref<number>(0);
 const reloadOrderEvent = ref<number>(0);
 const clearEvent = ref<number>(0);
 
@@ -40,6 +41,7 @@ export const useOrder = () => {
     client,
     comment,
     addProductEvent,
+    productTabError,
     reloadOrderEvent,
     clearEvent,
     setClient(_client: IClient) {
@@ -52,7 +54,7 @@ export const useOrder = () => {
       if (prodIndex === -1) {
         products.value.push({
           ...product,
-          cant: 0
+          cant: null
         })
         addProductEvent.value++;
         return true;
@@ -83,11 +85,17 @@ export const useOrder = () => {
       }
 
       if(products.value.length <= 0) {
+        productTabError.value++
         return STATES.PRODUCT_LENGTH_ERROR
       }
 
+      const anyIsZero = products.value.filter(prod => +prod.cant<1)
       const totalOrder = products.value.reduce((previousValue, curr) => previousValue + parseFloat((curr.cant * curr.unitPrice).toFixed(2)),0)
-      if(totalOrder <= 0) {
+
+      console.log(anyIsZero.length);
+
+      if(totalOrder <= 0 || anyIsZero.length) {
+        productTabError.value++
         return STATES.TOTAL_MIN_ERROR
       }
 
@@ -119,11 +127,15 @@ export const useOrder = () => {
       }
 
       if(products.value.length <= 0) {
+        productTabError.value++
         return STATES.PRODUCT_LENGTH_ERROR
       }
 
+      const anyIsZero = products.value.filter(prod => +prod.cant<1)
       const totalOrder = products.value.reduce((previousValue, curr) => previousValue + parseFloat((curr.cant * curr.unitPrice).toFixed(2)),0)
-      if(totalOrder <= 0) {
+
+      if(totalOrder <= 0 || anyIsZero.length) {
+        productTabError.value++
         return STATES.TOTAL_MIN_ERROR
       }
 

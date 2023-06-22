@@ -21,7 +21,7 @@
 
     <Drawer></Drawer>
 
-    <q-page-container :key="counter">
+    <q-page-container>
       <router-view></router-view>
     </q-page-container>
 
@@ -51,8 +51,7 @@ import {useConfig} from "src/shared/composables/useConfig";
 
 const {toggle} = useDrawer()
 const {offline} = useConfig()
-const {products, uploadOrder} = useOrder();
-const counter = ref(0)
+const {products, uploadOrder} = useOrder()
 const $q = useQuasar();
 
 const totalOrder = computed(() => {
@@ -98,7 +97,6 @@ async function sendOrder() {
   }
 
   $q.loading.hide();
-  counter.value++
 }
 
 </script>

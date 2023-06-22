@@ -42,13 +42,32 @@ import ComentariosTab from "pages/Pedidos/components/ComentariosTab.vue";
 import {useOrder} from "src/shared/composables/useOrder";
 
 const tab = ref('Cliente')
-const {addProductEvent} = useOrder()
+const {addProductEvent, productTabError} = useOrder()
 
 watch(addProductEvent, () => {
   if(tab.value !== "Productos") {
     tab.value = "Productos"
   }
+
+  setTimeout(_=> {
+      // Seleccionar todos los elementos de una clase específica
+      var elementos = document.querySelectorAll('.p-cantidad');
+
+      // Obtener el último elemento
+      var ultimoElemento = elementos[elementos.length - 1];
+
+      // Obtener el input dentro del último elemento
+      var input = ultimoElemento.querySelector('input');
+
+      // Enfocar el input
+      input.focus();
+  }, 100);
 })
+
+watch(productTabError, _=>
+{
+  tab.value = "Productos"
+});
 
 </script>
 

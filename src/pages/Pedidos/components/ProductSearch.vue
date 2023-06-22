@@ -21,7 +21,7 @@
 
       <q-card-section style="position: fixed; z-index: 50; width: 84%; height: 60px; background-color: white; border-bottom: 1px solid black" >
         <div class="flex justify-between">
-          <div class="text-h6">Productos:</div>
+          <div class="text-h6">Productos</div>
           <div>
             <q-btn icon="close" rounded unelevated @click="fixed = false"></q-btn>
           </div>
@@ -30,28 +30,28 @@
 
       <q-separator></q-separator>
 
-      <q-card-section class="scroll" style="max-height: 80vh; padding-top: 60px">
+      <q-card-section class="scroll" style="max-height: 82vh; padding-top: 60px">
 
-        <div class="flex column" style="width: 100%; position: relative" v-for="(product, index) in productsList" :key="index" v-ripple @click="addProductToOrder(product)">
-          <div class="text-center text-bold q-my-sm" style="font-size: 14px">
-            {{ product.name }}
+        <div class="flex column" style="width: 100%; position: relative; font-size: 10.1px;" v-for="(product, index) in productsList" :key="index" v-ripple @click="addProductToOrder(product)">
+          <div class="text-center text-bold q-my-sm">
+            {{ product.name+' '+product.marca }}
           </div>
-          <div class="flex justify-between q-mb-xs q-px-md">
+          <div class="flex justify-between" style="height: 45px;">
             <div class="thirdSpace flex column text-center">
-              <div class="text-bold">Prec. Unitario</div>
+              <div class="text-bold">P. Unitario</div>
               <div class="text-blue text-bold">{{ product.unitPrice.toFixed(2) }}</div>
             </div>
             <div class="thirdSpace flex column text-center">
-              <div class="text-bold">Prec. Especial</div>
-              <div class="text-blue text-bold">{{ product.especialPrice.toFixed(2) }}</div>
+              <div class="text-bold">P. Mayor</div>
+              <div class="text-blue text-bold">{{ product.promotorPrice.toFixed(2) }}</div>
             </div>
             <div class="thirdSpace flex column text-center">
-              <div class="text-bold">Prec. Promotor</div>
-              <div class="text-blue text-bold">{{ product.promotorPrice.toFixed(2) }}</div>
+              <div class="text-bold">P. Especial</div>
+              <div class="text-blue text-bold">{{ product.especialPrice.toFixed(2) }}</div>
             </div>
           </div>
 
-          <div class="flex justify-between q-px-md">
+          <div class="flex justify-between" style="height: 45px;">
             <div class="thirdSpace flex column text-center">
               <div class="text-bold">Stock</div>
               <div class="text-red text-bold">{{ product.stock }}</div>
@@ -61,7 +61,7 @@
               <div>{{ product.cantByBox }}</div>
             </div>
             <div class="thirdSpace flex column text-center">
-              <div class="text-bold">Codigo</div>
+              <div class="text-bold">Código</div>
               <div>{{ product.codigo }}</div>
             </div>
           </div>

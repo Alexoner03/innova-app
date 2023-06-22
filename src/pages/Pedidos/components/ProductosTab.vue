@@ -1,28 +1,29 @@
 <template>
   <div style="width: 100%; height:calc(100vh - 190px)" class="scroll">
     <div v-for="(product, index) in products" :key="index">
-      <p class="text-bold text-center" style="font-size: 20px">{{ product.name }}</p>
-      <div class="flex justify-between no-wrap">
+      <p class="text-bold text-center" style="font-size: 13px">{{ product.name }}</p>
+
+      <div class="flex justify-between no-wrap q-ma-xs">
         <q-btn
           color="primary"
-          size="sm"
-          :label="`Promotor: ${product.promotorPrice.toFixed(2)}`"
+          size="xs"
+          :label="`Unitario: ${product.unitarioPrice.toFixed(2)}`"
+          @click="product.unitPrice = product.unitarioPrice"
+        />
+        <q-btn
+          color="primary"
+          size="xs"
+          :label="`Mayor: ${product.promotorPrice.toFixed(2)}`"
           @click="product.unitPrice = product.promotorPrice"
         />
         <q-btn
           color="primary"
-          size="sm"
+          size="xs"
           :label="`Especial: ${product.especialPrice.toFixed(2)}`"
           @click="product.unitPrice = product.especialPrice"
         />
-        <q-btn
-          color="primary"
-          size="sm"
-          :label="`Unitario: ${product.unitarioPrice.toFixed(2)}`"
-          @click="product.unitPrice = product.unitarioPrice"
-        />
-
       </div>
+
       <div class="flex justify-between items-center no-wrap q-my-md">
         <div class="flex justify-between items-center no-wrap q-mr-lg">
           <q-btn class="q-mr-md" icon="close" color="negative" round dense @click="onDelete(product)"></q-btn>
@@ -37,7 +38,7 @@
             v-model="product.cant"
             type="number"
             outlined
-            class="q-mr-sm"
+            class="q-mr-sm p-cantidad"
           >
           </q-input>
           <q-input v-model="product.unitPrice" outlined class="q-mr-sm"

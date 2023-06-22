@@ -49,7 +49,7 @@ export const useDebt = () => {
     },
 
     removeAdvacement(advacement: IAdvacementTemp) {
-      tempAdvacementes.value = tempAdvacementes.value.filter(item => item.serie === advacement.serie);
+      tempAdvacementes.value = tempAdvacementes.value.filter(item => item.serie !== advacement.serie);
     },
 
     async sendAdvacements() {

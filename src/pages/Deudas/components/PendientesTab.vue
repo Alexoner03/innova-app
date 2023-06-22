@@ -211,7 +211,7 @@ const confirmAddAdvacement = () => {
     return
   }
 
-  const value = parseInt(advancement.value)
+  const value = parseFloat(advancement.value)
 
   if(value && value <= 0) {
     $q.notify({message: "El monto debe ser mayor a 0"})

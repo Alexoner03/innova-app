@@ -14,10 +14,12 @@ export interface SaveClientDTO {
   cliente: string,
   direccion: string,
   telefono: string,
-  representante: string,
+  vendedor: string,
   nombre_comercial: string,
   zona: string,
-  correo: string
+  correo: string,
+  nombre_cliente: string,
+  fecha_nacimiento: string
 }
 
 const ClientService = {

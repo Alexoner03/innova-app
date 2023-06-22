@@ -13,7 +13,8 @@ export interface IProduct {
   unitarioPrice: number,
   cantByBox: number,
   codigo: string,
-  url: string
+  url: string,
+  marca: string
 }
 
 const products = ref<IProduct[]>([])
