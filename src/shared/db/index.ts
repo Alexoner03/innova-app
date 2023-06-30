@@ -29,7 +29,7 @@ export class LocalDB extends Dexie {
     })
 
     this.version(2).stores({
-      products: '++id, product_id, name, stock, unitPrice, promotorPrice, especialPrice, unitarioPrice, cantByBox, codigo, url, marca'
+      products: '++id, product_id, name, stock, unitPrice, promotorPrice, especialPrice, unitarioPrice, cantByBox, codigo, url, marca, cost'
     })
   }
 }

@@ -14,7 +14,8 @@ export interface IProduct {
   cantByBox: number,
   codigo: string,
   url: string,
-  marca: string
+  marca: string,
+  cost: number
 }
 
 const products = ref<IProduct[]>([])

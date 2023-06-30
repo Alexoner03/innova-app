@@ -41,8 +41,12 @@
             class="q-mr-sm p-cantidad"
           >
           </q-input>
-          <q-input v-model="product.unitPrice" outlined class="q-mr-sm"
-                   style="font-size: 20px; width: 33.33333%"
+          <q-input
+            v-model="product.unitPrice" outlined class="q-mr-sm"
+            style="font-size: 20px; width: 33.33333%"
+            :color="product.unitPrice > product.cost ? 'primary': product.unitPrice == product.cost ? 'positive' : 'negative'"
+            :style="{backgroundColor: product.unitPrice > product.cost ? 'inherit': product.unitPrice == product.cost ? 'rgb(33,186,69)' : 'rgba(255,0,0,0.41)'}"
+            @blur="() => product.unitPrice < product.cost ? product.unitPrice = product.cost : null"
           >
           </q-input>
           <q-field outlined style="font-size: 20px; width: 33.33333%">
