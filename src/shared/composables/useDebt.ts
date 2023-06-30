@@ -19,14 +19,22 @@ export interface IDetail {
 }
 
 const debts = ref<IDebt[]>([])
+const sellsRaw = ref<IDebt[]>([])
+const sellClient = ref<string>("")
+const clientFiltered = ref<boolean>(false)
 const tempAdvacementes = ref<IAdvacementTemp[]>([])
 
 export const useDebt = () => {
   return {
     debts,
+    sellClient,
+    sellsRaw,
     tempAdvacementes,
+    clientFiltered,
 
     async listDebts(client: string = "") {
+      clientFiltered.value = client !== ""
+
       const result = await DebtService.list(client)
 
       if(result === null) {
@@ -34,6 +42,36 @@ export const useDebt = () => {
       }
 
       debts.value = result
+      return true
+    },
+
+    async resetSells(client: string = "") {
+      sellClient.value = client
+
+      const result = await DebtService.listSell(client, 1)
+
+      if(result === null) {
+        return false
+      }
+
+      sellsRaw.value = result.data
+      return true
+    },
+
+
+    async listSells(client: string = "", page: number = 1) {
+      const result = await DebtService.listSell(client, page)
+
+      if(result === null) {
+        return false
+      }
+
+      if(page === 1) {
+        sellsRaw.value = result.data
+        return true
+      }
+
+      sellsRaw.value.push(...result.data)
       return true
     },
 

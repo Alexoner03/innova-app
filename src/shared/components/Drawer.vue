@@ -76,6 +76,12 @@ const Menu = [
     link: 'https://quasar.dev'
   },
   {
+    title: 'Ventas',
+    url: '/ventas',
+    icon: 'payments',
+    link: 'https://quasar.dev'
+  },
+  {
     title: 'Deudas',
     url: '/deudas',
     icon: 'payments',

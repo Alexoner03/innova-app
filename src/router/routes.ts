@@ -4,6 +4,7 @@ import PedidosIndex from '../pages/Pedidos/Index.vue'
 import DeudasIndex from '../pages/Deudas/Index.vue'
 import ClientesIndex from '../pages/Clientes/Index.vue'
 import VendedorIndex from '../pages/Vendedor/Index.vue'
+import VentasIndex from '../pages/Ventas/index.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -56,6 +57,18 @@ const routes: RouteRecordRaw[] = [
         path: "",
         component: DeudasIndex,
         name: "deudas"
+      }
+    ],
+  },
+
+  {
+    path: '/ventas',
+    component: () => import('pages/Ventas/layout/Layout.vue'),
+    children: [
+      {
+        path: "",
+        component: VentasIndex,
+        name: "ventas"
       }
     ],
   },

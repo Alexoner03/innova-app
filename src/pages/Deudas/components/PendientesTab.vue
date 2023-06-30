@@ -22,6 +22,26 @@
         </p>
       </q-item-section>
     </q-item>
+
+    <q-item v-if="clientFiltered">
+      <q-item-section>
+        <div class="flex full-width justify-between items-center">
+          <div style="width: 33.333%" class="flex column justify-center items-center">
+            <div class="text-bold">Deuda total</div>
+            <div class="text-blue">{{ debts.reduce((prev, curr) => prev += curr.total ?? 0, 0).toFixed(2)  }}</div>
+          </div>
+          <div style="width: 33.333%" class="flex column justify-center items-center">
+            <div class="text-bold">Pendiente total</div>
+            <div class="text-red">{{ debts.reduce((prev, curr) => prev += curr.pendiente ?? 0, 0).toFixed(2) }}</div>
+          </div>
+          <div style="width: 33.333%" class="flex column justify-center items-center">
+            <div class="text-bold">A cuenta total</div>
+            <div class="text-blue full-width text-center">{{ debts.reduce((prev, curr) => prev += curr.acuenta ?? 0, 0).toFixed(2) }}</div>
+          </div>
+        </div>
+      </q-item-section>
+    </q-item>
+
   </q-list>
 
   <q-dialog v-model="prompt" persistent>
@@ -136,7 +156,7 @@ import {useQuasar} from "quasar";
 import debtService, {IAdvacement, IDebt} from "src/shared/services/online/DebtService";
 import DebtService from "src/shared/services/online/DebtService";
 
-const {debts, addAdvacement, listDebts, listDetail} = useDebt()
+const {debts, clientFiltered , addAdvacement, listDebts, listDetail} = useDebt()
 const $q = useQuasar()
 const isLoading = ref(false)
 const prompt = ref(false)
@@ -247,6 +267,10 @@ const downloadPDF = () => {
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)
+}
+
+const isFiltered = () => {
+
 }
 
 load()

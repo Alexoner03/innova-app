@@ -7,8 +7,7 @@
       bg-color="white"
       dense
       placeholder="Buscar Cliente"
-      @focus="changeTab"
-      @update:model-value="searchDebt"
+      @update:model-value="searchSell"
     >
       <template v-slot:append>
         <q-icon name="search"/>
@@ -22,52 +21,45 @@
     unelevated
     dense
     :ripple="false"
-    menu-anchor="bottom right" @click="loadDebts"
+    menu-anchor="bottom right" @click="loadSells"
   />
 </template>
 
 <script setup lang="ts">
 import {ref} from "vue";
-import {useTab} from "pages/Deudas/composables/useTab";
 import {useQuasar} from "quasar";
 import {useDebt} from "src/shared/composables/useDebt";
 
 const search = ref("")
-const {tab} = useTab()
 const $q = useQuasar()
-const {debts, listDebts} = useDebt()
-
-function changeTab() {
-  tab.value = 'Pendientes'
-}
-
-async function searchDebt(value: string) {
+const {sellsRaw, resetSells} = useDebt()
+async function searchSell(value: string) {
   if (value.length < 3) {
     return
   }
 
   $q.loading.show({message: "Buscando clientes"});
 
-  const result = await listDebts(value)
+  const result = await resetSells(value)
 
   if (result) {
-    $q.notify({message: debts.value.length === 0 ? "No se encontraron deudas" : "Deudas cargadas con exito"})
+    $q.notify({message: sellsRaw.value.length === 0 ? "No se encontraron ventas" : "Ventas cargadas con exito"})
   } else {
-    $q.notify({message: "Error cargando deudas", color: 'negative'})
+    $q.notify({message: "Error cargando ventas", color: 'negative'})
   }
 
   $q.loading.hide()
 }
 
-async function loadDebts() {
+async function loadSells() {
   $q.loading.show({message: "Buscando clientes"});
 
-  const result = await listDebts()
+  const result = await resetSells()
 
   if (result) {
-    $q.notify({message: "Deudas cargadas con exito"})
+    $q.notify({message: "Ventas cargadas con exito"})
   } else {
-    $q.notify({message: "Error cargando deudas", color: 'negative'})
+    $q.notify({message: "Error cargando ventas", color: 'negative'})
   }
 
   $q.loading.hide()

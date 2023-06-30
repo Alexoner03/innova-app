@@ -20,10 +20,42 @@ export interface IAdvacement {
   encargado: string
 }
 
+export interface PagedIDebt {
+  data: IDebt[],
+  next_page_url: string,
+  path: string,
+  per_page: number,
+  prev_page_url: string,
+  to: number,
+  total: number,
+  current_page: number
+}
+
 const DebtService = {
   async list(client: string = "") {
     try {
       const response = await axios.get<IDebt[]>(`${BACKEND_URL}/api/venta`, {
+        params: {
+          cliente: client !== "" ? client : undefined
+        },
+        headers: {
+          "Authorization":  "Bearer "+localStorage.getItem("token")
+        }
+      })
+
+      if (response.status !== 200) {
+        return null
+      }
+
+      return response.data;
+    }catch (e) {
+      return null
+    }
+  },
+
+  async listSell(client: string = "", page: number = 1) {
+    try {
+      const response = await axios.get<PagedIDebt>(`${BACKEND_URL}/api/venta?venta=1&page=${page}`, {
         params: {
           cliente: client !== "" ? client : undefined
         },
