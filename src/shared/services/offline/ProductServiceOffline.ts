@@ -7,7 +7,10 @@ import _ from "lodash";
 const ProductServiceOffline = {
   async filterProducts(value: string) {
     const result = await db.products
-      .filter(x => x.name.toLowerCase().includes(value.toLowerCase()))
+      .filter(x => {
+        const words = value.split(" ").map(i => i.toLowerCase())
+        return words.some(w => x.name.toLowerCase().includes(w)) || words.some(w => x.marca.toLowerCase().includes(w))
+      })
       .toArray()
 
     return _.orderBy(result,['name'],['asc'])
