@@ -22,7 +22,7 @@
           <span class="text-bold text-primary" style="font-size: 11px">
             TIPO DE DOCUMENTO: {{item.documento}}
           </span>
-        <q-btn size="sm" color="primary">
+        <q-btn size="sm" color="primary" href="https://www.lineauno.pe/wp-content/uploads/2023/06/guia_2806.pdf" target="_blank">
           Descargar PDF
         </q-btn>
       </div>
