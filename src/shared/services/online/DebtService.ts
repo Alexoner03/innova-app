@@ -53,11 +53,13 @@ const DebtService = {
     }
   },
 
-  async listSell(client: string = "", page: number = 1) {
+  async listSell(client: string, from: string, to: string) {
     try {
-      const response = await axios.get<PagedIDebt>(`${BACKEND_URL}/api/venta?venta=1&page=${page}`, {
+      const response = await axios.get<IDebt[]>(`${BACKEND_URL}/api/venta/buscar`, {
         params: {
-          cliente: client !== "" ? client : undefined
+          cliente: client,
+          from,
+          to
         },
         headers: {
           "Authorization":  "Bearer "+localStorage.getItem("token")

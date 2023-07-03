@@ -45,33 +45,15 @@ export const useDebt = () => {
       return true
     },
 
-    async resetSells(client: string = "") {
-      sellClient.value = client
+    async resetSells(client: string, from: string, to: string) {
 
-      const result = await DebtService.listSell(client, 1)
-
-      if(result === null) {
-        return false
-      }
-
-      sellsRaw.value = result.data
-      return true
-    },
-
-
-    async listSells(client: string = "", page: number = 1) {
-      const result = await DebtService.listSell(client, page)
+      const result = await DebtService.listSell(client, from, to)
 
       if(result === null) {
         return false
       }
 
-      if(page === 1) {
-        sellsRaw.value = result.data
-        return true
-      }
-
-      sellsRaw.value.push(...result.data)
+      sellsRaw.value = result
       return true
     },
 
