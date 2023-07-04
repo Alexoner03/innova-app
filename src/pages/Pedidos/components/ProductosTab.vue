@@ -1,7 +1,11 @@
 <template>
   <div style="width: 100%; height:calc(100vh - 190px)" class="scroll">
     <div v-for="(product, index) in products" :key="index">
-      <p class="text-bold text-center" style="font-size: 13px">{{ product.name }}</p>
+      <p class="text-bold text-center" style="font-size: 13px; vertical-align: center">
+        {{ product.name }} {{ product.marca}}
+
+        <q-btn @click="historyProduct(product)" icon="info" class="float-right" color="primary" flat dense size="sm"/>
+      </p>
 
       <div class="flex justify-between no-wrap q-ma-xs">
         <q-btn
@@ -61,15 +65,34 @@
       <q-separator></q-separator>
     </div>
   </div>
+
+  <q-dialog v-model="historyModal">
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Alert</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        {{selectedProduct}}
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="OK" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup lang="ts">
 import {useOrder} from "src/shared/composables/useOrder";
 import {IProduct} from "src/shared/composables/useProduct";
 import {useQuasar} from "quasar";
+import {ref} from "vue";
 
 const {removeProduct, products} = useOrder()
 const $q = useQuasar()
+const historyModal = ref<boolean>(false)
+const selectedProduct = ref<IProduct>()
 
 const onDelete = (product: IProduct) => {
   removeProduct(product)
@@ -79,8 +102,9 @@ const onDelete = (product: IProduct) => {
   })
 }
 
-const consolelog = () => {
-  console.log("ok")
+const historyProduct = (product: IProduct) => {
+  selectedProduct.value = product
+  historyModal.value = true
 }
 </script>
 

@@ -141,7 +141,6 @@
       <q-separator />
 
       <q-card-actions align="between">
-        <q-btn dense label="descargar pdf" color="primary" @click="downloadPDF()" />
         <q-btn flat label="cerrar" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
