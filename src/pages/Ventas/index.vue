@@ -22,7 +22,7 @@
           <span class="text-bold text-primary" style="font-size: 11px">
             TIPO DE DOCUMENTO: {{item.documento}}
           </span>
-        <q-btn size="sm" color="primary" href="https://www.lineauno.pe/wp-content/uploads/2023/06/guia_2806.pdf" target="_blank">
+        <q-btn size="sm" color="primary" :href="buildPdf(item)" target="_blank">
           Descargar PDF
         </q-btn>
       </div>
@@ -35,5 +35,11 @@
 
 <script setup lang="ts">
 import {useDebt} from 'src/shared/composables/useDebt'
+import {IDebt} from "src/shared/services/online/DebtService";
+import {BACKEND_URL} from "src/shared/constants";
 const {sellsRaw} = useDebt()
+
+const buildPdf = (item: IDebt) => {
+  return `${BACKEND_URL}/api/venta/reporte?serie=${item.serieventas}&tipo=${item.documento}&token=${localStorage.getItem("token")}`
+}
 </script>
