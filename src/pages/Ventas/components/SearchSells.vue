@@ -166,7 +166,7 @@ function filterName(val: any, update: any, abort: any) {
     return
   }
 
-  filterClients("name", val).then(() => {
+  filterClients("name", val, true).then(() => {
     update(() => {
       options.value = clients.value;
     })
@@ -180,7 +180,7 @@ function filterRuc(val: any, update: any, abort: any) {
     return
   }
 
-  filterClients("ruc", val).then(() => {
+  filterClients("ruc", val, true).then(() => {
     update(() => {
       options.value = clients.value;
     })

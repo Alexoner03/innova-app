@@ -23,12 +23,17 @@ export interface SaveClientDTO {
 }
 
 const ClientService = {
-  async filterClients(type: "name" | "ruc", value: string) {
+  async filterClients(type: "name" | "ruc", value: string, ferretero: boolean) {
 
     try {
-      const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente/filter?type=${type}&value=${value.toLowerCase()}`, {
+      const response = await axios.get<RawClient[]>(`${BACKEND_URL}/api/cliente/filter`, {
         headers: {
           "Authorization": "Bearer " + localStorage.getItem("token")
+        },
+        params: {
+          type,
+          value: value.toLowerCase(),
+          ferretero : ferretero ? 1 : undefined
         }
       })
 

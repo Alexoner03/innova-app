@@ -17,12 +17,12 @@ const {offline} = useConfig()
 export const useClient = () => {
   return {
     clients,
-    async filterClients(type: "name" | "ruc", value: string) {
+    async filterClients(type: "name" | "ruc", value: string, ferretero: boolean = false ) {
 
       const hasConexion = window.navigator.onLine && !offline.value;
 
       if (hasConexion) {
-        const result = await ClientService.filterClients(type, value)
+        const result = await ClientService.filterClients(type, value, ferretero)
 
         if(result !== null) {
           clients.value = result

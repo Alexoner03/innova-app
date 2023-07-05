@@ -7,7 +7,7 @@
     use-input
     hide-selected
     fill-input
-    input-debounce="0"
+    input-debounce="500"
     map-options
     option-label="name"
     label="Nombre"
@@ -33,7 +33,7 @@
     use-input
     hide-selected
     fill-input
-    input-debounce="0"
+    input-debounce="500"
     map-options
     option-label="ruc"
     label="Ruc"
