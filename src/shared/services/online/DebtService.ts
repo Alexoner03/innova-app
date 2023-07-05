@@ -114,10 +114,10 @@ const DebtService = {
     }
   },
 
-  async listDetails(serie: string): Promise<IDetail[]> {
+  async listDetails(serie: string, tipo: string): Promise<IDetail[]> {
     try {
       const response = await axios.get<IDetail[]>(`${BACKEND_URL}/api/venta/detalle`, {
-          params: { serie },
+          params: { serie, tipo },
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("token")
           }

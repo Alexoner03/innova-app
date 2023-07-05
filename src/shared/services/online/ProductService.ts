@@ -15,6 +15,21 @@ interface RawProduct {
   p_compra: number
 }
 
+export interface History {
+  ventas:  HistoryItem[];
+  compras: HistoryItem[];
+}
+
+export interface HistoryItem {
+  fecha:    Date;
+  cantidad: number;
+  producto: string;
+  unitario: number;
+  billete?: string;
+  proveedor?: string;
+}
+
+
 const ProductService = {
   async searchProduct(value: string) {
     try {
@@ -80,6 +95,28 @@ const ProductService = {
       })
     }catch (e) {
       return  null;
+    }
+  },
+
+  async getHistory(id: number, cliente: string) {
+    try {
+      const response = await axios.get<History>(`${BACKEND_URL}/api/producto/history`,{
+        headers: {
+          "Authorization" :"Bearer "+ localStorage.getItem("token")
+        },
+        params: {
+          id,
+          cliente
+        }
+      })
+
+      if(response.status !== 200) {
+        return null
+      }
+
+      return response.data
+    }catch (e) {
+      return null
     }
   }
 }

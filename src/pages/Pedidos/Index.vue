@@ -22,7 +22,7 @@
         <cliente-tab/>
       </q-tab-panel>
 
-      <q-tab-panel name="Productos">
+      <q-tab-panel name="Productos" class="q-pa-sm">
         <productos-tab/>
       </q-tab-panel>
 

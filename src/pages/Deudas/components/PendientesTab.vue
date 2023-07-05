@@ -102,8 +102,8 @@
 
       <q-separator />
 
-      <q-card-section style="max-height: 70vh; width: 80vw; max-width: 80vw" class="scroll q-pa-none">
-        <q-list separator bordered>
+      <q-card-section style="width: 100%" class="scroll q-pa-none">
+        <q-list separator bordered class="full-width">
           <q-item v-for="item in detailsProds" dense>
             <div class="flex column full-width">
               <div :class="['text-center text-bold q-my-sm', item.estado === 'devolucion' ? 'text-negative' : 'text-primary']">
@@ -252,7 +252,7 @@ const confirmAddAdvacement = () => {
 
 const showDetails = async (serie: IDebt) => {
   $q.loading.show({message: "Cargando detalles de la serie: " + serie.serieventas})
-  detailsProds.value = await listDetail(serie.serieventas);
+  detailsProds.value = await listDetail(serie.serieventas, serie.documento);
   detailModal.value = true;
   selectedDetail.value = serie
   $q.loading.hide()

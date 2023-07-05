@@ -55,6 +55,10 @@ export const useProduct= () => {
 
         return await ProductServiceOffline.saveProductos(result)
       }
+    },
+
+    async getHistory(id:number, cliente: string) {
+      return ProductService.getHistory(id, cliente)
     }
   }
 }

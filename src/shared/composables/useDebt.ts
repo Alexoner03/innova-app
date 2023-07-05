@@ -85,8 +85,8 @@ export const useDebt = () => {
 
     },
 
-    listDetail(serie: string) {
-      return DebtService.listDetails(serie)
+    listDetail(serie: string, tipo: string) {
+      return DebtService.listDetails(serie, tipo)
     }
   }
 }

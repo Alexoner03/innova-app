@@ -17,9 +17,9 @@
   </q-toolbar-title>
 
   <q-dialog v-model="fixed">
-    <q-card style="position: relative">
+    <q-card style="position: relative; width: 100%">
 
-      <q-card-section style="position: fixed; z-index: 50; width: 84%; height: 60px; background-color: white; border-bottom: 1px solid black" >
+      <q-card-section style="z-index: 50; width: 100%; height: 60px; background-color: white; border-bottom: 1px solid black" >
         <div class="flex justify-between">
           <div class="text-h6">Productos</div>
           <div>
@@ -30,13 +30,13 @@
 
       <q-separator></q-separator>
 
-      <q-card-section class="scroll" style="max-height: 82vh; padding-top: 60px">
+      <q-card-section class="scroll q-pa-none" style="max-height: 60vh" >
 
         <div class="flex column" style="width: 100%; position: relative; font-size: 10.1px;" v-for="(product, index) in productsList" :key="index" v-ripple @click="addProductToOrder(product)">
-          <div class="text-center text-bold q-my-sm">
+          <div class="text-center text-bold">
             {{ product.name+' '+product.marca }}
           </div>
-          <div class="flex justify-between" style="height: 45px;">
+          <div class="flex justify-between" style="height: 30px;">
             <div class="thirdSpace flex column text-center">
               <div class="text-bold">P. Unitario</div>
               <div class="text-blue text-bold">{{ product.unitPrice.toFixed(2) }}</div>
@@ -51,7 +51,7 @@
             </div>
           </div>
 
-          <div class="flex justify-between" style="height: 45px;">
+          <div class="flex justify-between" style="height: 32px;">
             <div class="thirdSpace flex column text-center">
               <div class="text-bold">Stock</div>
               <div class="text-red text-bold">{{ product.stock }}</div>
