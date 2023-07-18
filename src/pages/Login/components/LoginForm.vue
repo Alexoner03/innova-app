@@ -63,7 +63,8 @@
         { value: "clientepichari03", label : "Grupo Canayre"},
         { value: "clientepichari04", label : "Danielita"},
         { value: "clientepichari05", label : "Inversiones Sonpra"},
-        { value: "innovaprincipal_bkp", label : "Prueba"}
+        { value: "almacenhuancayo", label : "almacenhuancayo"},
+        { value: "innovaprincipal_bkp", label : "Prueba"},
       ]'
       :option-value="item => item.value"
       :option-label="item => item.label"

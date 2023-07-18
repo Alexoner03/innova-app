@@ -197,7 +197,9 @@ export const useOrder = () => {
           codigo: item.codigo,
           especialPrice: item.especialPrice,
           promotorPrice: item.promotorPrice,
-          unitarioPrice: item.unitarioPrice
+          unitarioPrice: item.unitarioPrice,
+          marca: item.marca,
+          cost: item.cost
         }
       })
 
