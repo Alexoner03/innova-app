@@ -9,7 +9,8 @@ const ProductServiceOffline = {
     const result = await db.products
       .filter(x => {
         const words = value.split(" ").map(i => i.toLowerCase())
-        return words.some(w => x.name.toLowerCase().includes(w)) || words.some(w => x.marca.toLowerCase().includes(w))
+        const word = x.name + x.marca
+        return words.every(w => word.toLowerCase().includes(w))
       })
       .toArray()
 
