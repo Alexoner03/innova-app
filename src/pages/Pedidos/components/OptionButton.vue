@@ -136,6 +136,12 @@ const _saveOrder = async () => {
     case STATES.PRODUCT_LENGTH_ERROR:
       $q.notify({message: "Seleccione un producto", color: 'red'});
       break;
+    case STATES.NAME_NOT_VALID:
+      $q.notify({message: "El nombre debe tener minimo 8 caracteres", color: 'red'});
+      break;
+    case STATES.RUC_NOT_VALID:
+      $q.notify({message: "El ruc debe ser de 11 digitos", color: 'red'});
+      break;
   }
 
 }

@@ -28,7 +28,9 @@ export const enum STATES {
   EXCEED_ERROR,
 
   PRODUCT_LENGTH_ERROR,
-  UNKNOWN
+  UNKNOWN,
+  RUC_NOT_VALID,
+  NAME_NOT_VALID
 }
 
 const addProductEvent = ref<number>(0);
@@ -84,6 +86,19 @@ export const useOrder = () => {
       if(client.value === null) {
         return STATES.CLIENT_ERROR
       }
+
+      if(client.value.isNewClient){
+
+        if(/^\d{11}$/.test(client.value.ruc)){
+          return STATES.RUC_NOT_VALID
+        }
+
+        if(client.value.name.toLowerCase().trim().length < 8){
+            return STATES.NAME_NOT_VALID
+        }
+
+      }
+
 
       if(products.value.length <= 0) {
         productTabError.value++
