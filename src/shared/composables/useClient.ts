@@ -8,7 +8,7 @@ export interface IClient {
   name: string,
   ruc: string,
   address: string,
-
+  isNewClient: boolean;
 }
 
 const clients = ref<IClient[]>([])
@@ -58,7 +58,8 @@ export const useClient = () => {
         client_id: response.client,
         name: dto.cliente,
         address: dto.direccion,
-        ruc: dto.ruc
+        ruc: dto.ruc,
+        isNewClient: false
       })
 
       return response

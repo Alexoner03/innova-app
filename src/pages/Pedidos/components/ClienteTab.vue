@@ -1,13 +1,13 @@
 <template>
 
   <q-toggle
-    v-model="isNewClient"
+    v-model="model.isNewClient"
     label="¿Cliente nuevo?"
     class="q-mb-lg"
   />
 
   <q-input
-    v-if="model && isNewClient"
+    v-if="model && model.isNewClient"
     outlined
     type="text"
     v-model="model.name"
@@ -47,7 +47,7 @@
 
 
   <q-input
-    v-if="model && isNewClient"
+    v-if="model && model.isNewClient"
     outlined
     type="number"
     v-model="model.ruc"
@@ -95,11 +95,12 @@
   </q-select>
 
   <q-input
-    :disable="isNewClient"
+    :disable="!model.isNewClient"
     outlined
+    v-model="model.address"
     type="text"
     label="Dirección"
-    :hint="isNewClient ? 'Escriba una Dirección' : ''"
+    :hint="model.isNewClient ? 'Escriba una Dirección' : ''"
   >
   </q-input>
 
@@ -113,14 +114,13 @@ import {useOrder} from "src/shared/composables/useOrder";
 
 const {clients, filterClients} = useClient()
 const {setClient, reloadOrderEvent, client, clearEvent} = useOrder()
-const isNewClient = ref(false)
-
 
 const model = ref<IClient>({
   client_id: client.value ? client.value.client_id : -1,
   name: client.value ? client.value.name : "",
   ruc: client.value ? client.value.ruc : "",
   address: client.value ? client.value.address : "",
+  isNewClient: client.value ? client.value.isNewClient : false
 })
 
 watch(model, (value) => setClient(value))
@@ -135,16 +135,8 @@ watch(clearEvent, () => {
     client_id: -1,
     name: "",
     ruc: "",
-    address: ""
-  }
-})
-
-watch(isNewClient, () => {
-  model.value = {
-    client_id: -1,
-    name: "",
-    ruc: "",
-    address: ""
+    address: "",
+    isNewClient: false
   }
 })
 

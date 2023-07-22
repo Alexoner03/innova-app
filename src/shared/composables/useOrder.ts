@@ -10,6 +10,7 @@ export type IProductOrder = IProduct & { cant: any };
 
 const client = ref<IClient | null>(null)
 const products = ref<IProductOrder[]>([])
+const isNewClient = ref(false)
 const comment = ref<string>("")
 const id = ref<number | null>(null)
 
@@ -44,6 +45,7 @@ export const useOrder = () => {
     productTabError,
     reloadOrderEvent,
     clearEvent,
+    isNewClient,
     setClient(_client: IClient) {
       client.value = _client;
     },
@@ -109,7 +111,7 @@ export const useOrder = () => {
           comment: comment.value.toString(),
           client: JSON.parse(JSON.stringify(client.value)),
           products: JSON.parse(JSON.stringify(products.value)),
-          createdAt: obtenerHoraActual()
+          createdAt: obtenerHoraActual(),
         }, id.value)
 
         clear()
@@ -150,7 +152,7 @@ export const useOrder = () => {
           comment: comment.value.toString(),
           client: JSON.parse(JSON.stringify(client.value)),
           products: JSON.parse(JSON.stringify(products.value)),
-          createdAt: obtenerHoraActual()
+          createdAt: obtenerHoraActual(),
         })
 
         if(!result)
@@ -181,7 +183,8 @@ export const useOrder = () => {
         client_id: order.client.client_id,
         name: order.client.name,
         address: order.client.address,
-        ruc: order.client.ruc
+        ruc: order.client.ruc,
+        isNewClient: order.client.isNewClient
       }
       id.value = order.id as number
       comment.value = order.comment

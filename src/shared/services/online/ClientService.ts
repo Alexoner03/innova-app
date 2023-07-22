@@ -46,7 +46,8 @@ const ClientService = {
           client_id: item.id_cliente,
           name: item.cliente,
           address: item.direccion,
-          ruc: item.ruc
+          ruc: item.ruc,
+          isNewClient: false
         }
       })
     } catch (e) {
@@ -71,7 +72,8 @@ const ClientService = {
           client_id: item.id_cliente,
           name: item.cliente,
           address: item.direccion,
-          ruc: item.ruc
+          ruc: item.ruc,
+          isNewClient: false
         }
       })
     } catch (e) {
