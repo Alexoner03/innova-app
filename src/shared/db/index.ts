@@ -8,6 +8,7 @@ export interface Order {
   client: IClient
   comment: string;
   products: IProductOrder[];
+  isNewCliente: boolean;
   createdAt: string
 }
 
@@ -20,8 +21,8 @@ export class LocalDB extends Dexie {
   constructor() {
     super("innova");
 
-    this.version(2).stores({
-      orders: '++id, *client, comment, *products, createdAt',
+    this.version(3).stores({
+      orders: '++id, *client, comment, *products, createdAt, isNewClient',
     });
 
     this.version(2).stores({

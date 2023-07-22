@@ -1,5 +1,24 @@
 <template>
+
+  <q-toggle
+    v-model="isNewClient"
+    label="¿Cliente nuevo?"
+    class="q-mb-lg"
+  />
+
+  <q-input
+    v-if="model && isNewClient"
+    outlined
+    type="text"
+    v-model="model.name"
+    class="q-mb-lg"
+    label="Nombre"
+    hint="Escriba un nombre"
+  >
+  </q-input>
+
   <q-select
+    v-else
     clearable
     behavior="menu"
     outlined
@@ -25,7 +44,22 @@
     </template>
   </q-select>
 
+
+
+  <q-input
+    v-if="model && isNewClient"
+    outlined
+    type="number"
+    v-model="model.ruc"
+    class="q-mb-lg"
+    label="Ruc"
+    mask="###########"
+    unmasked-value
+    hint="Escriba un ruc"
+  >
+  </q-input>
   <q-select
+    v-else
     clearable
     behavior="menu"
     outlined
@@ -61,21 +95,11 @@
   </q-select>
 
   <q-input
-    v-if="model"
-    disable
-    outlined
-    type="text"
-    v-model="model.address"
-    label="Dirección"
-  >
-  </q-input>
-
-  <q-input
-    v-else
-    disable
+    :disable="isNewClient"
     outlined
     type="text"
     label="Dirección"
+    :hint="isNewClient ? 'Escriba una Dirección' : ''"
   >
   </q-input>
 
@@ -89,7 +113,7 @@ import {useOrder} from "src/shared/composables/useOrder";
 
 const {clients, filterClients} = useClient()
 const {setClient, reloadOrderEvent, client, clearEvent} = useOrder()
-
+const isNewClient = ref(false)
 
 
 const model = ref<IClient>({
@@ -107,6 +131,15 @@ watch(reloadOrderEvent, () => {
 })
 
 watch(clearEvent, () => {
+  model.value = {
+    client_id: -1,
+    name: "",
+    ruc: "",
+    address: ""
+  }
+})
+
+watch(isNewClient, () => {
   model.value = {
     client_id: -1,
     name: "",
