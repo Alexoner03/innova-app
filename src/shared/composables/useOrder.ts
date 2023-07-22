@@ -10,9 +10,9 @@ export type IProductOrder = IProduct & { cant: any };
 
 const client = ref<IClient | null>(null)
 const products = ref<IProductOrder[]>([])
-const isNewClient = ref(false)
 const comment = ref<string>("")
 const id = ref<number | null>(null)
+const loadingFromLocaDB = ref(false)
 
 const clear = () => {
   client.value = null
@@ -45,7 +45,7 @@ export const useOrder = () => {
     productTabError,
     reloadOrderEvent,
     clearEvent,
-    isNewClient,
+    loadingFromLocaDB,
     setClient(_client: IClient) {
       client.value = _client;
     },
@@ -71,7 +71,6 @@ export const useOrder = () => {
     },
 
     async reset() {
-
       if(id.value !== null) {
         await OrderServiceOffline.delete(id.value);
       }
@@ -93,8 +92,6 @@ export const useOrder = () => {
 
       const anyIsZero = products.value.filter(prod => +prod.cant<1)
       const totalOrder = products.value.reduce((previousValue, curr) => previousValue + parseFloat((curr.cant * curr.unitPrice).toFixed(2)),0)
-
-      console.log(anyIsZero.length);
 
       if(totalOrder <= 0 || anyIsZero.length) {
         productTabError.value++
@@ -179,6 +176,7 @@ export const useOrder = () => {
     },
 
     loadOrder(order: Order) {
+      loadingFromLocaDB.value = true;
       client.value = {
         client_id: order.client.client_id,
         name: order.client.name,

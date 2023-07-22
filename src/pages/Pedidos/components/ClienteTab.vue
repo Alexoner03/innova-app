@@ -113,7 +113,8 @@ import {IClient, useClient} from "src/shared/composables/useClient";
 import {useOrder} from "src/shared/composables/useOrder";
 
 const {clients, filterClients} = useClient()
-const {setClient, reloadOrderEvent, client, clearEvent} = useOrder()
+const {setClient, reloadOrderEvent, client, clearEvent, loadingFromLocaDB} = useOrder()
+const options = ref<IClient[]>([])
 
 const model = ref<IClient>({
   client_id: client.value ? client.value.client_id : -1,
@@ -123,7 +124,20 @@ const model = ref<IClient>({
   isNewClient: client.value ? client.value.isNewClient : false
 })
 
-watch(model, (value) => setClient(value))
+watch(model, (value) => setClient(value), {deep: true})
+
+watch(() => model.value.isNewClient, () => {
+
+  if(loadingFromLocaDB.value){
+    loadingFromLocaDB.value = false;
+    return
+  }
+
+  model.value.client_id = -1
+  model.value.name = ""
+  model.value.ruc = ""
+  model.value.address = ""
+})
 
 watch(reloadOrderEvent, () => {
   options.value = [client.value!]
@@ -140,7 +154,6 @@ watch(clearEvent, () => {
   }
 })
 
-const options = ref<IClient[]>([])
 
 function filterName(val: any, update: any, abort: any) {
 
