@@ -8,6 +8,7 @@ const OrderService = {
       {
         comment: order.comment ?? "",
         client: order.client.client_id,
+        isNewClient: order.client.isNewClient,
         products: order.products.map(item => {
           return {
             cant: item.cant,

@@ -140,6 +140,19 @@ export const useOrder = () => {
         return STATES.CLIENT_ERROR
       }
 
+      if(client.value.isNewClient){
+
+        if(/^\d{11}$/.test(client.value.ruc)){
+          return STATES.RUC_NOT_VALID
+        }
+
+        if(client.value.name.toLowerCase().trim().length < 8){
+          return STATES.NAME_NOT_VALID
+        }
+
+      }
+
+
       if(products.value.length <= 0) {
         productTabError.value++
         return STATES.PRODUCT_LENGTH_ERROR
