@@ -82,7 +82,7 @@
              v-for="(order, index) in saveOrders" :key="index"
              style="width: 100%; position: relative; border: 1px solid black;" v-ripple>
           <div class="text-center text-bold">
-            {{ order.client.name }}
+            {{ order.client.name !== "" ? order.client.name : "CLIENTE NO REGISTRADO" }}
           </div>
           <div class="text-center">
             Cantidad de productos: {{ order.products.length }} <br>

@@ -9,6 +9,7 @@ const OrderService = {
         comment: order.comment ?? "",
         client: order.client.client_id,
         isNewClient: order.client.isNewClient,
+        newClientData: order.client.isNewClient ? [order.client.name,order.client.ruc,order.client.address ?? ""] : null,
         products: order.products.map(item => {
           return {
             cant: item.cant,

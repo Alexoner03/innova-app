@@ -87,18 +87,9 @@ export const useOrder = () => {
         return STATES.CLIENT_ERROR
       }
 
-      if(client.value.isNewClient){
-
-        if(/^\d{11}$/.test(client.value.ruc)){
-          return STATES.RUC_NOT_VALID
-        }
-
-        if(client.value.name.toLowerCase().trim().length < 8){
-            return STATES.NAME_NOT_VALID
-        }
-
+      if(!client.value.isNewClient && client.value.client_id === -1) {
+        return  STATES.CLIENT_ERROR
       }
-
 
       if(products.value.length <= 0) {
         productTabError.value++
@@ -113,10 +104,12 @@ export const useOrder = () => {
         return STATES.TOTAL_MIN_ERROR
       }
 
-/*      const sameExcced = products.value.some(item => item.cant > item.stock)
+      /*
+      const sameExcced = products.value.some(item => item.cant > item.stock)
       if(sameExcced) {
         return STATES.EXCEED_ERROR
-      }*/
+      }
+      */
 
       try {
         await OrderServiceOffline.save({
@@ -140,18 +133,9 @@ export const useOrder = () => {
         return STATES.CLIENT_ERROR
       }
 
-      if(client.value.isNewClient){
-
-        if(/^\d{11}$/.test(client.value.ruc)){
-          return STATES.RUC_NOT_VALID
-        }
-
-        if(client.value.name.toLowerCase().trim().length < 8){
-          return STATES.NAME_NOT_VALID
-        }
-
+      if(!client.value.isNewClient && client.value.client_id === -1) {
+        return  STATES.CLIENT_ERROR
       }
-
 
       if(products.value.length <= 0) {
         productTabError.value++
@@ -165,11 +149,6 @@ export const useOrder = () => {
         productTabError.value++
         return STATES.TOTAL_MIN_ERROR
       }
-
-/*      const sameExcced = products.value.some(item => item.cant > item.stock)
-      if(sameExcced) {
-        return STATES.EXCEED_ERROR
-      }*/
 
       try {
 
