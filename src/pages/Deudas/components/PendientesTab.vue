@@ -54,11 +54,27 @@
         <div>Pendiente: {{selectedItem?.pendiente}}</div>
       </q-card-section>
 
+      <q-card-section>
+        <vue-drawing-canvas
+          v-model:image="image"
+          ref="VueCanvasDrawing"
+          :line-width="3"
+          line-join="round"
+          :width="getWidth()"
+          :height="200"
+          :styles="{
+            border: 'solid 1px #000',
+          }"
+        />
+      </q-card-section>
+
       <q-card-section class="q-pt-none">
+        <q-input outlined label="Pagante" type="text" dense v-model="payeer" autofocus class="q-mb-md" />
         <q-input outlined label="Monto" type="number" dense v-model="advancement" autofocus @keyup.enter="confirmAddAdvacement" />
       </q-card-section>
 
       <q-card-actions align="right" class="text-primary">
+        <q-btn flat label="Borrar Firma" @click="cleanSign" />
         <q-btn flat label="Cancelar" v-close-popup />
         <q-btn flat label="Guardar" @click="confirmAddAdvacement" />
       </q-card-actions>
@@ -149,11 +165,11 @@
 </template>
 
 <script setup lang="ts">
-import {IDetail, useDebt} from "src/shared/composables/useDebt";
 import {ref} from "vue";
 import {useQuasar} from "quasar";
-import debtService, {IAdvacement, IDebt} from "src/shared/services/online/DebtService";
-import DebtService from "src/shared/services/online/DebtService";
+import VueDrawingCanvas from "vue-drawing-canvas"
+import {IDetail, useDebt} from "src/shared/composables/useDebt";
+import DebtService, {IAdvacement, IDebt} from "src/shared/services/online/DebtService";
 
 const {debts, clientFiltered , addAdvacement, listDebts, listDetail} = useDebt()
 const $q = useQuasar()
@@ -166,6 +182,12 @@ const selectedItem = ref<IDebt | null>(null);
 const listAdvacements = ref<IAdvacement[]>([])
 const detailsProds = ref<IDetail[]>([])
 const selectedDetail = ref<IDebt | null>(null)
+const VueCanvasDrawing = ref<InstanceType<typeof VueDrawingCanvas>>()
+const image = ref<string>("")
+const payeer = ref<string>("")
+
+
+const cleanSign = () => VueCanvasDrawing.value!.reset()
 
 const load = async () => {
 
@@ -197,6 +219,7 @@ const showAdvancementModal = (item: IDebt) => {
     return
   }
 
+  image.value = "";
   selectedItem.value = item;
   prompt.value = true;
 }
@@ -204,7 +227,7 @@ const showAdvancementModal = (item: IDebt) => {
 const loadAdvancements = async (item: IDebt) => {
   $q.loading.show({message: "Cargando Adelantos"})
   listAdvacements.value = [];
-  const result = await debtService.listAdvacements(item.serieventas)
+  const result = await DebtService.listAdvacements(item.serieventas)
 
   if (result === null) {
     $q.notify({message: "Error cargando adelantos", color: 'negative'})
@@ -237,12 +260,19 @@ const confirmAddAdvacement = () => {
     return
   }
 
+  if(VueCanvasDrawing.value!.isEmpty()){
+    $q.notify({message: "Debe firmar el adelanto"})
+    return
+  }
+
   addAdvacement({
     serie: selectedItem.value!.serieventas,
     acuenta: value,
     cliente: selectedItem.value!.cliente,
     pendiente: selectedItem.value!.pendiente,
-    documento: selectedItem.value!.documento
+    documento: selectedItem.value!.documento,
+    pagante: payeer.value,
+    firma: image.value
   })
 
   advancement.value = "";
@@ -258,18 +288,8 @@ const showDetails = async (serie: IDebt) => {
   $q.loading.hide()
 }
 
-const downloadPDF = () => {
-  const a = document.createElement('a')
-  a.href = DebtService.getDownloadPDFURL() + `&serieventas=${selectedDetail.value?.serieventas}`
-  a.download = `reporte_${selectedDetail.value?.serieventas}.pdf`
-  a.target = "_blank"
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-}
-
-const isFiltered = () => {
-
+const getWidth = () => {
+  return (window.innerWidth * 0.85)-32
 }
 
 load()
